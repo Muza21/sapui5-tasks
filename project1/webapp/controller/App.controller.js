@@ -1,10 +1,6 @@
 sap.ui.define(
-  [
-    "project1/controller/Base.controller",
-    "project1/model/books",
-    "sap/m/MessageToast",
-  ],
-  function (BaseController, books, MessageToast) {
+  ["project1/controller/Base.controller", "project1/model/books"],
+  function (BaseController, books) {
     "use strict";
 
     return BaseController.extend("project1.controller.App", {
