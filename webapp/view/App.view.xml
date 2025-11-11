@@ -10,6 +10,11 @@
                   <Toolbar>
                      <Title text="Books" level="H2"/>
                      <ToolbarSpacer/>
+                     <Button
+                        text="Sort"
+                        icon="sap-icon://sort"
+                        type="Default"
+                        press=".onOpenSortDialog"/>
                      <Button text="Add Record" icon="sap-icon://add" type="Emphasized" press=".onAddRecord"/>
                      <Button text="Delete Record" icon="sap-icon://delete" type="Reject" press=".onDeleteRecord"/>
                   </Toolbar>
