@@ -95,6 +95,26 @@ sap.ui.define(
         }
         oBinding.filter(aFilters);
       },
+
+      onEditPress: function (oEvent) {
+        const oButton = oEvent.getSource();
+        const oInput = oButton.getParent().getCells()[0];
+        oButton.setText("Save");
+        oButton.setIcon("sap-icon://save");
+        oButton.attachPress(this.onSavePress.bind(this));
+        oButton.detachPress(this.onEditPress);
+        oInput.setEditable(true);
+      },
+
+      onSavePress: function (oEvent) {
+        const oButton = oEvent.getSource();
+        const oInput = oButton.getParent().getCells()[0];
+        oButton.setText("Edit Title");
+        oButton.setIcon("sap-icon://edit");
+        oButton.attachPress(this.onEditPress.bind(this));
+        oButton.detachPress(this.onSavePress);
+        oInput.setEditable(false);
+      },
     });
   }
 );

@@ -38,16 +38,18 @@
                   <Column><Label text="Genre"/></Column>
                   <Column><Label text="Release Date"/></Column>
                   <Column><Label text="Available Quantity"/></Column>
+                  <Column><Label text="Actions"/></Column>
                </columns>
 
                <items>
                   <ColumnListItem>
                      <cells>
-                        <Text text="{booksModel>Name}"/>
+                        <Input id="bookTitleInput" value="{booksModel>Name}" editable="false"/>
                         <Text text="{booksModel>Author}"/>
                         <Text text="{booksModel>Genre}"/>
                         <Text text="{booksModel>ReleaseDate}"/>
                         <Text text="{booksModel>AvailableQuantity}"/>
+                        <Button id="editButton" text="Edit Title" icon="sap-icon://edit" press=".onEditPress"/>
                      </cells>
                   </ColumnListItem>
                </items>
