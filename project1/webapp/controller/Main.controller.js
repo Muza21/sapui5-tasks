@@ -104,16 +104,20 @@ sap.ui.define(
         oButton.attachPress(this.onSavePress.bind(this));
         oButton.detachPress(this.onEditPress);
         oInput.setEditable(true);
+        oInput.getValue();
       },
 
       onSavePress: function (oEvent) {
         const oButton = oEvent.getSource();
-        const oInput = oButton.getParent().getCells()[0];
+        const oRow = oButton.getParent();
+        const oInput = oRow.getCells()[0];
+        const oBook = oRow.getBindingContext("booksModel");
         oButton.setText("Edit Title");
         oButton.setIcon("sap-icon://edit");
         oButton.attachPress(this.onEditPress.bind(this));
         oButton.detachPress(this.onSavePress);
         oInput.setEditable(false);
+        oBook.getModel().setProperty("Name", oInput.getValue(), oBook);
       },
     });
   }
