@@ -44,7 +44,7 @@
       <beginButton>
          <Button
             text="Cancel"
-            press=".onCloseDialog"/>
+            press=".onCloseFormDialog"/>
       </beginButton>
       <endButton>
          <Button

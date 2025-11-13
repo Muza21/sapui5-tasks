@@ -26,7 +26,7 @@
       <beginButton>
          <Button
             text="Cancel"
-            press=".onCloseDialog"/>
+            press=".onCancelSortDialog"/>
       </beginButton>
       <endButton>
          <Button

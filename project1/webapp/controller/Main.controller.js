@@ -5,8 +5,16 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/json/JSONModel",
+    "sap/m/MessageToast",
   ],
-  function (BaseController, books, Filter, FilterOperator, JSONModel) {
+  function (
+    BaseController,
+    books,
+    Filter,
+    FilterOperator,
+    JSONModel,
+    MessageToast
+  ) {
     "use strict";
 
     return BaseController.extend("project1.controller.App", {
@@ -18,14 +26,19 @@ sap.ui.define(
       onAddRecord: function () {
         const oModel = this.getModel("booksModel");
         const aBooks = oModel.getProperty("/books");
-        const oBookData = this.oDialog.getModel("book").getData();
+        const oBookData = this.oFormDialog.getModel("book").getData();
+        const sError = this._validateBookData(oBookData);
+        if (sError) {
+          MessageToast.show(sError);
+          return;
+        }
         aBooks.push({
           ID: Date.now(),
           ...oBookData,
           editable: false,
         });
         oModel.refresh();
-        this.oDialog.close();
+        this.oFormDialog.close();
       },
 
       onDeleteRecord: function () {
@@ -39,23 +52,23 @@ sap.ui.define(
           aBooks.splice(iIndex, 1);
           oModel.refresh();
         }
-        this.oDialog.close();
+        this.oConfirmDialog.close();
       },
 
       onOpenSortDialog: async function () {
-        this.oDialog ??= await this.loadFragment({
+        this.oSortDialog ??= await this.loadFragment({
           name: "project1.view.SortDialog",
         });
 
-        this.oDialog.open();
+        this.oSortDialog.open();
       },
 
-      onCloseDialog: function () {
-        this.byId("SortDialog").close();
+      onCancelSortDialog: function () {
+        this.oSortDialog.close();
       },
 
       onCloseDialogWithSort: function () {
-        if (!this.byId("SortDialog")) return;
+        if (!this.oSortDialog) return;
         const oFieldCombo = this.byId("sortField");
         const oOrderCombo = this.byId("sortOrder");
         const sField = oFieldCombo.getSelectedKey();
@@ -66,7 +79,7 @@ sap.ui.define(
           .getBinding("items")
           .sort(new sap.ui.model.Sorter(sField, sOrder !== "asc"));
         oModel.refresh();
-        this.byId("SortDialog").close();
+        this.oSortDialog.close();
       },
 
       onFilterBooks: function () {
@@ -94,19 +107,19 @@ sap.ui.define(
       },
 
       onOpenConfirmDialog: async function () {
-        this.oDialog ??= await this.loadFragment({
+        this.oConfirmDialog ??= await this.loadFragment({
           name: "project1.view.ConfirmDialog",
         });
 
-        this.oDialog.open();
+        this.oConfirmDialog.open();
       },
 
       onCloseConfirmDialog: function () {
-        this.byId("ConfirmDialog").close();
+        this.oConfirmDialog.close();
       },
 
       onOpenFormDialog: async function () {
-        this.oDialog ??= await this.loadFragment({
+        this.oFormDialog ??= await this.loadFragment({
           name: "project1.view.FormDialog",
         });
 
@@ -118,8 +131,31 @@ sap.ui.define(
           AvailableQuantity: "",
         });
 
-        this.oDialog.setModel(oFormModel, "book");
-        this.oDialog.open();
+        this.oFormDialog.setModel(oFormModel, "book");
+        this.oFormDialog.open();
+      },
+
+      onCloseFormDialog: function () {
+        this.oFormDialog.close();
+      },
+
+      _validateBookData: function (oBookData) {
+        if (!oBookData.Name) return "Name is required";
+        if (!oBookData.Author) return "Author is required";
+        if (!oBookData.Genre) return "Genre is required";
+        if (
+          !oBookData.ReleaseDate ||
+          isNaN(Date.parse(oBookData.ReleaseDate))
+        ) {
+          return "Release Date must be a valid date";
+        }
+        if (
+          oBookData.AvailableQuantity === "" ||
+          isNaN(oBookData.AvailableQuantity)
+        ) {
+          return "Available Quantity must be a number";
+        }
+        return null;
       },
     });
   }
