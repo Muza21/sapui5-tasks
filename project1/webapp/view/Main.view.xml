@@ -44,7 +44,7 @@
                <items>
                   <ColumnListItem>
                      <cells>
-                        <Input value="{booksModel>Name}" editable="{booksModel>editable}"/>
+                        <Text text="{booksModel>Name}"/>
                         <Text text="{booksModel>Author}"/>
                         <Text text="{booksModel>Genre}"/>
                         <Text
@@ -53,9 +53,9 @@
                                     formatter: 'Formatter.dateDisplay.bind($controller)' }"/>
                         <Text text="{booksModel>AvailableQuantity}"/>
                         <Button 
-                           text="{= ${booksModel>editable} ? ${i18n>save} : ${i18n>edit} }"
-                           icon="{= ${booksModel>editable} ? 'sap-icon://save' : 'sap-icon://edit'}"
-                           press=".onEditToggle"/>
+                           text="{i18n>edit}"
+                           icon="sap-icon://edit"
+                           press=".onEditPress"/>
                      </cells>
                   </ColumnListItem>
                </items>

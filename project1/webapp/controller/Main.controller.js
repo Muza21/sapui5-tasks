@@ -29,7 +29,8 @@ sap.ui.define(
         this.setModel(i18nModel, "i18n");
       },
 
-      onAddRecord: function () {
+      onSubmitForm: function () {
+        const oMode = this.oFormDialog.getModel("mode").getProperty("/mode");
         const oModel = this.getModel("booksModel");
         const aBooks = oModel.getProperty("/books");
         const oBookData = this.oFormDialog.getModel("book").getData();
@@ -38,11 +39,14 @@ sap.ui.define(
           MessageToast.show(sError);
           return;
         }
-        aBooks.push({
-          ID: Date.now(),
-          ...oBookData,
-          editable: false,
-        });
+        if (oMode === "edit") {
+          const iIndex = aBooks.findIndex((b) => b.ID === oBookData.ID);
+          if (iIndex !== -1) {
+            aBooks[iIndex] = { ...oBookData };
+          }
+        } else {
+          aBooks.push({ ID: Date.now(), ...oBookData });
+        }
         oModel.refresh();
         this.oFormDialog.close();
       },
@@ -103,13 +107,11 @@ sap.ui.define(
         oBinding.filter(aFilters);
       },
 
-      onEditToggle: function (oEvent) {
+      onEditPress: function (oEvent) {
         const oButton = oEvent.getSource();
         const oContext = oButton.getBindingContext("booksModel");
-        const oModel = oContext.getModel();
-        const sPath = oContext.getPath();
-        const bEditable = oModel.getProperty(sPath + "/editable");
-        oModel.setProperty(sPath + "/editable", !bEditable);
+        const oBookData = oContext.getObject();
+        this.onOpenFormDialog(oBookData, true);
       },
 
       onOpenConfirmDialog: async function () {
@@ -124,20 +126,26 @@ sap.ui.define(
         this.oConfirmDialog.close();
       },
 
-      onOpenFormDialog: async function () {
+      onOpenFormDialog: async function (oBookData, bEditmode = false) {
         this.oFormDialog ??= await this.loadFragment({
           name: "project1.view.FormDialog",
         });
-
-        const oFormModel = new JSONModel({
-          Name: "",
-          Author: "",
-          Genre: "",
-          ReleaseDate: "",
-          AvailableQuantity: "",
-        });
-
+        const oFormModel = new JSONModel(
+          bEditmode
+            ? oBookData
+            : {
+                Name: "",
+                Author: "",
+                Genre: "",
+                ReleaseDate: "",
+                AvailableQuantity: "",
+              }
+        );
         this.oFormDialog.setModel(oFormModel, "book");
+        this.oFormDialog.setModel(
+          new JSONModel({ mode: bEditmode ? "edit" : "create" }),
+          "mode"
+        );
         this.oFormDialog.open();
       },
 

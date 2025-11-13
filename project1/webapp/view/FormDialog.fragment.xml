@@ -3,8 +3,8 @@
    xmlns:core="sap.ui.core"
    xmlns:l="sap.ui.layout">
    <Dialog
-      id="FormDialog"
-      title ="{i18n>createBook}">
+      id="CreateFormDialog"
+      title ="{= ${mode>/mode} === 'edit' ? ${i18n>editBook} : ${i18n>createBook} }">
       <content>
         <l:VerticalLayout class="sapUiContentPadding" width="100%">
             <Label text="{i18n>name}" labelFor="Name" />
@@ -48,8 +48,8 @@
       </beginButton>
       <endButton>
          <Button
-            text="{i18n>create}"
-            press=".onAddRecord"/>
+            text="{= ${mode>/mode} === 'edit' ? ${i18n>save} : ${i18n>add} }"
+            press=".onSubmitForm"/>
       </endButton>
    </Dialog>
 </core:FragmentDefinition>
