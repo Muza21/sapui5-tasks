@@ -45,6 +45,7 @@ sap.ui.define(
           aBooks.splice(iIndex, 1);
           oModel.refresh();
         }
+        this.oDialog.close();
       },
 
       onOpenSortDialog: async function () {
@@ -96,6 +97,18 @@ sap.ui.define(
         const sPath = oContext.getPath();
         const bEditable = oModel.getProperty(sPath + "/editable");
         oModel.setProperty(sPath + "/editable", !bEditable);
+      },
+
+      onOpenConfirmDialog: async function () {
+        this.oDialog ??= await this.loadFragment({
+          name: "project1.view.ConfirmDialog",
+        });
+
+        this.oDialog.open();
+      },
+
+      onCloseConfirmDialog: function () {
+        this.byId("ConfirmDialog").close();
       },
     });
   }

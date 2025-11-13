@@ -27,7 +27,7 @@
                         type="Default"
                         press=".onOpenSortDialog"/>
                      <Button text="Add Record" icon="sap-icon://add" type="Emphasized" press=".onAddRecord"/>
-                     <Button text="Delete Record" icon="sap-icon://delete" type="Reject" press=".onDeleteRecord"/>
+                     <Button text="Delete Record" icon="sap-icon://delete" type="Reject" press=".onOpenConfirmDialog"/>
                   </Toolbar>
                </headerToolbar>
                
