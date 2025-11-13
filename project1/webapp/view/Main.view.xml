@@ -1,8 +1,21 @@
-<mvc:View controllerName="project1.controller.Main"
+<mvc:View
+    controllerName="project1.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
     xmlns="sap.m">
     <Page id="page" title="Books Management">
         <content>
+            <Toolbar>
+               <Input id="titleFilter"/>
+               <Select id="genreFilter" items="{path: 'booksModel>/genres'}">
+                  <core:Item key="{booksModel>}" text="{booksModel>}"/>
+               </Select>
+               <Button 
+                  text="Filter" 
+                  icon="sap-icon://filter" 
+                  type="Emphasized"
+                  press=".onFilterBooks"/>
+            </Toolbar>
             <Table id="booksTable" items="{path: 'booksModel>/books'}" mode="SingleSelectLeft">
                <headerToolbar>
                   <Toolbar>
@@ -17,23 +30,29 @@
                      <Button text="Delete Record" icon="sap-icon://delete" type="Reject" press=".onDeleteRecord"/>
                   </Toolbar>
                </headerToolbar>
-
+               
+                
                <columns>
                   <Column><Label text="Name"/></Column>
                   <Column><Label text="Author"/></Column>
                   <Column><Label text="Genre"/></Column>
                   <Column><Label text="Release Date"/></Column>
                   <Column><Label text="Available Quantity"/></Column>
+                  <Column><Label text="Actions"/></Column>
                </columns>
 
                <items>
                   <ColumnListItem>
                      <cells>
-                        <Text text="{booksModel>Name}"/>
+                        <Input value="{booksModel>Name}" editable="{booksModel>editable}"/>
                         <Text text="{booksModel>Author}"/>
                         <Text text="{booksModel>Genre}"/>
                         <Text text="{booksModel>ReleaseDate}"/>
                         <Text text="{booksModel>AvailableQuantity}"/>
+                        <Button 
+                           text="{= ${booksModel>editable} ? 'Save' : 'Edit Title'}"
+                           icon="{= ${booksModel>editable} ? 'sap-icon://save' : 'sap-icon://edit'}"
+                           press=".onEditToggle"/>
                      </cells>
                   </ColumnListItem>
                </items>

@@ -2,9 +2,10 @@ sap.ui.define(
   [
     "project1/controller/Base.controller",
     "project1/model/books",
-    "sap/m/MessageToast",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
   ],
-  function (BaseController, books, MessageToast) {
+  function (BaseController, books, Filter, FilterOperator) {
     "use strict";
 
     return BaseController.extend("project1.controller.App", {
@@ -28,6 +29,7 @@ sap.ui.define(
           Genre: "",
           ReleaseDate: "",
           AvailableQuantity: 0,
+          editable: false,
         });
         oModel.refresh();
       },
@@ -59,19 +61,41 @@ sap.ui.define(
 
       onCloseDialogWithSort: function () {
         if (!this.byId("SortDialog")) return;
-        debugger;
         const oFieldCombo = this.byId("sortField");
         const oOrderCombo = this.byId("sortOrder");
         const sField = oFieldCombo.getSelectedKey();
         const sOrder = oOrderCombo.getSelectedKey();
         const oModel = this.getModel("booksModel");
-        const aBooks = oModel.getProperty("/books");
         this.getView()
           .byId("booksTable")
           .getBinding("items")
           .sort(new sap.ui.model.Sorter(sField, sOrder !== "asc"));
         oModel.refresh();
         this.byId("SortDialog").close();
+      },
+
+      onFilterBooks: function () {
+        const sBookName = this.getView().byId("titleFilter").getValue();
+        const sGenre = this.getView().byId("genreFilter").getSelectedKey();
+        const oBinding = this.getView().byId("booksTable").getBinding("items");
+
+        const aFilters = [];
+        if (sBookName) {
+          aFilters.push(new Filter("Name", FilterOperator.Contains, sBookName));
+        }
+        if (sGenre !== "All Genres") {
+          aFilters.push(new Filter("Genre", FilterOperator.EQ, sGenre));
+        }
+        oBinding.filter(aFilters);
+      },
+
+      onEditToggle: function (oEvent) {
+        const oButton = oEvent.getSource();
+        const oContext = oButton.getBindingContext("booksModel");
+        const oModel = oContext.getModel();
+        const sPath = oContext.getPath();
+        const bEditable = oModel.getProperty(sPath + "/editable");
+        oModel.setProperty(sPath + "/editable", !bEditable);
       },
     });
   }
