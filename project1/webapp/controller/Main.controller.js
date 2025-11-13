@@ -6,7 +6,7 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
-    "sap/ui/model/resource/ResourceModel",
+    "sap/m/MessageBox",
   ],
   function (
     BaseController,
@@ -15,7 +15,7 @@ sap.ui.define(
     FilterOperator,
     JSONModel,
     MessageToast,
-    ResourceModel
+    MessageBox
   ) {
     "use strict";
 
@@ -58,7 +58,6 @@ sap.ui.define(
           aBooks.splice(iIndex, 1);
           oModel.refresh();
         }
-        this.oConfirmDialog.close();
       },
 
       onOpenSortDialog: async function () {
@@ -111,15 +110,19 @@ sap.ui.define(
       },
 
       onOpenConfirmDialog: async function () {
-        this.oConfirmDialog ??= await this.loadFragment({
-          name: "project1.view.ConfirmDialog",
+        const oResourceBundle = this.getOwnerComponent()
+          .getModel("i18n")
+          .getResourceBundle();
+        MessageBox.warning(oResourceBundle.getText("confirmQuestion"), {
+          actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+          emphasizedAction: MessageBox.Action.OK,
+          onClose: (sAction) => {
+            if (sAction === MessageBox.Action.OK) {
+              this.onDeleteRecord();
+            }
+          },
+          dependentOn: this.getView(),
         });
-
-        this.oConfirmDialog.open();
-      },
-
-      onCloseConfirmDialog: function () {
-        this.oConfirmDialog.close();
       },
 
       onOpenFormDialog: async function (oBookData, bEditmode = false) {
