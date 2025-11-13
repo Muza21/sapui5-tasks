@@ -23,10 +23,6 @@ sap.ui.define(
       onInit: function () {
         const oBooksModel = books.createBooksModel();
         this.setModel(oBooksModel, "booksModel");
-        const i18nModel = new ResourceModel({
-          bundleName: "project1.i18n.i18n",
-        });
-        this.setModel(i18nModel, "i18n");
       },
 
       onSubmitForm: function () {
@@ -130,7 +126,15 @@ sap.ui.define(
         this.oFormDialog ??= await this.loadFragment({
           name: "project1.view.FormDialog",
         });
-        const oFormModel = new JSONModel(
+        if (!this.oFormModel) {
+          this.oFormModel = new JSONModel();
+          this.oFormDialog.setModel(this.oFormModel, "book");
+        }
+        if (!this.oModeModel) {
+          this.oModeModel = new JSONModel();
+          this.oFormDialog.setModel(this.oModeModel, "mode");
+        }
+        this.oFormModel.setData(
           bEditmode
             ? oBookData
             : {
@@ -141,11 +145,7 @@ sap.ui.define(
                 AvailableQuantity: "",
               }
         );
-        this.oFormDialog.setModel(oFormModel, "book");
-        this.oFormDialog.setModel(
-          new JSONModel({ mode: bEditmode ? "edit" : "create" }),
-          "mode"
-        );
+        this.oModeModel.setData({ mode: bEditmode ? "edit" : "create" });
         this.oFormDialog.open();
       },
 
