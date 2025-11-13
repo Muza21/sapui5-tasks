@@ -11,15 +11,7 @@ sap.ui.define(
     return BaseController.extend("project1.controller.App", {
       onInit: function () {
         const oBooksModel = books.createBooksModel();
-        const aGenres = [
-          ...new Set(
-            oBooksModel.getProperty("/books").map((book) => book.Genre)
-          ),
-        ];
-        aGenres.unshift("All Genres");
-        const oGenresModel = new sap.ui.model.json.JSONModel(aGenres);
         this.setModel(oBooksModel, "booksModel");
-        this.setModel(oGenresModel, "genresModel");
       },
 
       onAddRecord: function () {
@@ -37,6 +29,7 @@ sap.ui.define(
           Genre: "",
           ReleaseDate: "",
           AvailableQuantity: 0,
+          editable: false,
         });
         oModel.refresh();
       },
@@ -96,28 +89,13 @@ sap.ui.define(
         oBinding.filter(aFilters);
       },
 
-      onEditPress: function (oEvent) {
+      onEditToggle: function (oEvent) {
         const oButton = oEvent.getSource();
-        const oInput = oButton.getParent().getCells()[0];
-        oButton.setText("Save");
-        oButton.setIcon("sap-icon://save");
-        oButton.attachPress(this.onSavePress.bind(this));
-        oButton.detachPress(this.onEditPress);
-        oInput.setEditable(true);
-        oInput.getValue();
-      },
-
-      onSavePress: function (oEvent) {
-        const oButton = oEvent.getSource();
-        const oRow = oButton.getParent();
-        const oInput = oRow.getCells()[0];
-        const oBook = oRow.getBindingContext("booksModel");
-        oButton.setText("Edit Title");
-        oButton.setIcon("sap-icon://edit");
-        oButton.attachPress(this.onEditPress.bind(this));
-        oButton.detachPress(this.onSavePress);
-        oInput.setEditable(false);
-        oBook.getModel().setProperty("Name", oInput.getValue(), oBook);
+        const oContext = oButton.getBindingContext("booksModel");
+        const oModel = oContext.getModel();
+        const sPath = oContext.getPath();
+        const bEditable = oModel.getProperty(sPath + "/editable");
+        oModel.setProperty(sPath + "/editable", !bEditable);
       },
     });
   }

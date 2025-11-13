@@ -7,8 +7,8 @@
         <content>
             <Toolbar>
                <Input id="titleFilter"/>
-               <Select id="genreFilter" items="{path: 'genresModel>/'}">
-                  <core:Item key="{genresModel>}" text="{genresModel>}"/>
+               <Select id="genreFilter" items="{path: 'booksModel>/genres'}">
+                  <core:Item key="{booksModel>}" text="{booksModel>}"/>
                </Select>
                <Button 
                   text="Filter" 
@@ -44,12 +44,15 @@
                <items>
                   <ColumnListItem>
                      <cells>
-                        <Input id="bookTitleInput" value="{booksModel>Name}" editable="false"/>
+                        <Input value="{booksModel>Name}" editable="{booksModel>editable}"/>
                         <Text text="{booksModel>Author}"/>
                         <Text text="{booksModel>Genre}"/>
                         <Text text="{booksModel>ReleaseDate}"/>
                         <Text text="{booksModel>AvailableQuantity}"/>
-                        <Button id="editButton" text="Edit Title" icon="sap-icon://edit" press=".onEditPress"/>
+                        <Button 
+                           text="{= ${booksModel>editable} ? 'Save' : 'Edit Title'}"
+                           icon="{= ${booksModel>editable} ? 'sap-icon://save' : 'sap-icon://edit'}"
+                           press=".onEditToggle"/>
                      </cells>
                   </ColumnListItem>
                </items>
