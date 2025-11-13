@@ -6,6 +6,7 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
+    "sap/ui/model/resource/ResourceModel",
   ],
   function (
     BaseController,
@@ -13,7 +14,8 @@ sap.ui.define(
     Filter,
     FilterOperator,
     JSONModel,
-    MessageToast
+    MessageToast,
+    ResourceModel
   ) {
     "use strict";
 
@@ -21,6 +23,10 @@ sap.ui.define(
       onInit: function () {
         const oBooksModel = books.createBooksModel();
         this.setModel(oBooksModel, "booksModel");
+        const i18nModel = new ResourceModel({
+          bundleName: "project1.i18n.i18n",
+        });
+        this.setModel(i18nModel, "i18n");
       },
 
       onAddRecord: function () {

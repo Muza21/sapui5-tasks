@@ -3,18 +3,18 @@
    xmlns:core="sap.ui.core">
    <Dialog
       id="ConfirmDialog"
-      title ="Confirm Deletion">
+      title ="{i18n>confirmDeletion}">
       <content>
-         <Text text="Are you sure you want to delete selected records?"/>
+         <Text text="{i18n>confirmQuestion}"/>
       </content>
       <beginButton>
          <Button
-            text="Cancel"
+            text="{i18n>cancel}"
             press=".onCloseConfirmDialog"/>
       </beginButton>
       <endButton>
          <Button
-            text="Yes"
+            text="{i18n>confirm}"
             press=".onDeleteRecord"/>
       </endButton>
    </Dialog>

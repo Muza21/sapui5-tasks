@@ -4,7 +4,12 @@ sap.ui.define([], () => {
   return {
     dateDisplay: function (sDate) {
       const oDate = new Date(sDate);
-      return "Published: " + oDate.getFullYear();
+      const oResourceBundle = this.getOwnerComponent()
+        .getModel("i18n")
+        .getResourceBundle();
+      return oResourceBundle.getText("releaseDateByFullYear", [
+        oDate.getFullYear(),
+      ]);
     },
   };
 });

@@ -4,51 +4,51 @@
    xmlns:l="sap.ui.layout">
    <Dialog
       id="FormDialog"
-      title ="Create a Book">
+      title ="{i18n>createBook}">
       <content>
         <l:VerticalLayout class="sapUiContentPadding" width="100%">
-            <Label text="Name" labelFor="Name" />
+            <Label text="{i18n>name}" labelFor="Name" />
             <Input
                 id="Name"
-                placeholder="Enter Name"
+                placeholder="{i18n>enterName}"
                 value="{book>/Name}"
                 class="sapUiSmallMarginBottom" />
-            <Label text="Author" labelFor="Author" />
+            <Label text="{i18n>author}" labelFor="Author" />
             <Input
                 id="Author"
-                placeholder="Enter Author"
+                placeholder="{i18n>enterAuthor}"
                 value="{book>/Author}"
                 class="sapUiSmallMarginBottom" />
-            <Label text="Genre" labelFor="Genre" />
+            <Label text="{i18n>genre}" labelFor="Genre" />
             <Input
                 id="Genre"
-                placeholder="Enter Genre"
+                placeholder="{i18n>enterGenre}"
                 value="{book>/Genre}"
                 class="sapUiSmallMarginBottom" />
-            <Label text="ReleaseDate" labelFor="ReleaseDate" />
+            <Label text="{i18n>releaseDate}" labelFor="ReleaseDate" />
             <Input
                 id="ReleaseDate"
                 type="Date"
-                placeholder="Enter ReleaseDate"
+                placeholder="Enter Release Date"
                 value="{book>/ReleaseDate}"
                 class="sapUiSmallMarginBottom" />
-            <Label text="AvailableQuantity" labelFor="AvailableQuantity" />
+            <Label text="{i18n>availableQuantity}" labelFor="AvailableQuantity" />
             <Input
                 id="AvailableQuantity"
                 type="Number"
-                placeholder="Enter AvailableQuantity"
+                placeholder="{i18n>enterAvailableQuantity}"
                 value="{book>/AvailableQuantity}"
                 class="sapUiSmallMarginBottom" />
         </l:VerticalLayout>
       </content>
       <beginButton>
          <Button
-            text="Cancel"
+            text="{i18n>cancel}"
             press=".onCloseFormDialog"/>
       </beginButton>
       <endButton>
          <Button
-            text="Create"
+            text="{i18n>create}"
             press=".onAddRecord"/>
       </endButton>
    </Dialog>
