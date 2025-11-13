@@ -6,7 +6,7 @@
     <Page id="page" title="Books Management">
         <content>
             <Toolbar>
-               <Input id="titleFilter"/>
+               <Input id="titleFilter" placeholder="search book by title"/>
                <Select id="genreFilter" items="{path: 'booksModel>/genres'}">
                   <core:Item key="{booksModel>}" text="{booksModel>}"/>
                </Select>
@@ -47,7 +47,10 @@
                         <Input value="{booksModel>Name}" editable="{booksModel>editable}"/>
                         <Text text="{booksModel>Author}"/>
                         <Text text="{booksModel>Genre}"/>
-                        <Text text="{booksModel>ReleaseDate}"/>
+                        <Text
+                           core:require="{ Formatter: 'project1/model/formatter' }"
+                           text="{  path: 'booksModel>ReleaseDate',
+                                    formatter: 'Formatter.dateDisplay' }"/>
                         <Text text="{booksModel>AvailableQuantity}"/>
                         <Button 
                            text="{= ${booksModel>editable} ? 'Save' : 'Edit Title'}"
