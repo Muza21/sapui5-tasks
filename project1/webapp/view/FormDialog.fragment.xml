@@ -1,0 +1,55 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:l="sap.ui.layout">
+   <Dialog
+      id="FormDialog"
+      title ="Create a Book">
+      <content>
+        <l:VerticalLayout class="sapUiContentPadding" width="100%">
+            <Label text="Name" labelFor="Name" />
+            <Input
+                id="Name"
+                placeholder="Enter Name"
+                value="{book>/Name}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="Author" labelFor="Author" />
+            <Input
+                id="Author"
+                placeholder="Enter Author"
+                value="{book>/Author}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="Genre" labelFor="Genre" />
+            <Input
+                id="Genre"
+                placeholder="Enter Genre"
+                value="{book>/Genre}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="ReleaseDate" labelFor="ReleaseDate" />
+            <Input
+                id="ReleaseDate"
+                type="Date"
+                placeholder="Enter ReleaseDate"
+                value="{book>/ReleaseDate}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="AvailableQuantity" labelFor="AvailableQuantity" />
+            <Input
+                id="AvailableQuantity"
+                type="Number"
+                placeholder="Enter AvailableQuantity"
+                value="{book>/AvailableQuantity}"
+                class="sapUiSmallMarginBottom" />
+        </l:VerticalLayout>
+      </content>
+      <beginButton>
+         <Button
+            text="Cancel"
+            press=".onCloseDialog"/>
+      </beginButton>
+      <endButton>
+         <Button
+            text="Create"
+            press=".onAddRecord"/>
+      </endButton>
+   </Dialog>
+</core:FragmentDefinition>
