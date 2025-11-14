@@ -3,34 +3,34 @@
    xmlns:core="sap.ui.core">
    <Dialog
       id="SortDialog"
-      title ="Sort books by fields">
+      title ="{i18n>sortBooksByFields}">
       <content>
          <Toolbar>
-            <ComboBox id="sortField" placeholder="Field">
+            <ComboBox id="sortField" placeholder="{i18n>field}">
                <items>
-                     <core:Item key="Name" text="Name"/>
-                     <core:Item key="Author" text="Author"/>
-                     <core:Item key="Genre" text="Genre"/>
-                     <core:Item key="ReleaseDate" text="Release Date"/>
-                     <core:Item key="AvailableQuantity" text="Available Quantity"/>
+                     <core:Item key="Name" text="{i18n>name}"/>
+                     <core:Item key="Author" text="{i18n>author}"/>
+                     <core:Item key="Genre" text="{i18n>genre}"/>
+                     <core:Item key="ReleaseDate" text="{i18n>releaseDate}"/>
+                     <core:Item key="AvailableQuantity" text="{i18n>availableQuantity}"/>
                </items>
             </ComboBox>
-            <ComboBox id="sortOrder" placeholder="Order">
+            <ComboBox id="sortOrder" placeholder="{i18n>order}">
                <items>
-                     <core:Item key="asc" text="Ascending"/>
-                     <core:Item key="desc" text="Descending"/>
+                     <core:Item key="asc" text="{i18n>ascending}"/>
+                     <core:Item key="desc" text="{i18n>descending}"/>
                </items>
             </ComboBox>
          </Toolbar>
       </content>
       <beginButton>
          <Button
-            text="Cancel"
-            press=".onCloseDialog"/>
+            text="{i18n>cancel}"
+            press=".onCancelSortDialog"/>
       </beginButton>
       <endButton>
          <Button
-            text="Sort"
+            text="{i18n>sort}"
             press=".onCloseDialogWithSort"/>
       </endButton>
    </Dialog>

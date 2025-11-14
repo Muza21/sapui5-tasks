@@ -3,15 +3,15 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns="sap.m">
-    <Page id="page" title="Books Management">
+    <Page id="page" title="{i18n>pageTitle}">
         <content>
             <Toolbar>
-               <Input id="titleFilter"/>
+               <Input id="titleFilter" placeholder="{i18n>searchBookByTitle}"/>
                <Select id="genreFilter" items="{path: 'booksModel>/genres'}">
                   <core:Item key="{booksModel>}" text="{booksModel>}"/>
                </Select>
                <Button 
-                  text="Filter" 
+                  text="{i18n>filter}" 
                   icon="sap-icon://filter" 
                   type="Emphasized"
                   press=".onFilterBooks"/>
@@ -19,40 +19,43 @@
             <Table id="booksTable" items="{path: 'booksModel>/books'}" mode="SingleSelectLeft">
                <headerToolbar>
                   <Toolbar>
-                     <Title text="Books" level="H2"/>
+                     <Title text="{i18n>books}" level="H2"/>
                      <ToolbarSpacer/>
                      <Button
-                        text="Sort"
+                        text="{i18n>sort}"
                         icon="sap-icon://sort"
                         type="Default"
                         press=".onOpenSortDialog"/>
-                     <Button text="Add Record" icon="sap-icon://add" type="Emphasized" press=".onAddRecord"/>
-                     <Button text="Delete Record" icon="sap-icon://delete" type="Reject" press=".onDeleteRecord"/>
+                     <Button text="{i18n>addRecord}" icon="sap-icon://add" type="Emphasized" press=".onOpenFormDialog"/>
+                     <Button text="{i18n>deleteRecord}" icon="sap-icon://delete" type="Reject" press=".onOpenConfirmDialog"/>
                   </Toolbar>
                </headerToolbar>
                
                 
                <columns>
-                  <Column><Label text="Name"/></Column>
-                  <Column><Label text="Author"/></Column>
-                  <Column><Label text="Genre"/></Column>
-                  <Column><Label text="Release Date"/></Column>
-                  <Column><Label text="Available Quantity"/></Column>
-                  <Column><Label text="Actions"/></Column>
+                  <Column><Label text="{i18n>name}"/></Column>
+                  <Column><Label text="{i18n>author}"/></Column>
+                  <Column><Label text="{i18n>genre}"/></Column>
+                  <Column><Label text="{i18n>releaseDate}"/></Column>
+                  <Column><Label text="{i18n>availableQuantity}"/></Column>
+                  <Column><Label text="{i18n>actions}"/></Column>
                </columns>
 
                <items>
                   <ColumnListItem>
                      <cells>
-                        <Input value="{booksModel>Name}" editable="{booksModel>editable}"/>
+                        <Text text="{booksModel>Name}"/>
                         <Text text="{booksModel>Author}"/>
                         <Text text="{booksModel>Genre}"/>
-                        <Text text="{booksModel>ReleaseDate}"/>
+                        <Text
+                           core:require="{ Formatter: 'project1/model/formatter' }"
+                           text="{  path: 'booksModel>ReleaseDate',
+                                    formatter: 'Formatter.dateDisplay.bind($controller)' }"/>
                         <Text text="{booksModel>AvailableQuantity}"/>
                         <Button 
-                           text="{= ${booksModel>editable} ? 'Save' : 'Edit Title'}"
-                           icon="{= ${booksModel>editable} ? 'sap-icon://save' : 'sap-icon://edit'}"
-                           press=".onEditToggle"/>
+                           text="{i18n>edit}"
+                           icon="sap-icon://edit"
+                           press=".onEditPress"/>
                      </cells>
                   </ColumnListItem>
                </items>

@@ -4,8 +4,19 @@ sap.ui.define(
     "project1/model/books",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox",
   ],
-  function (BaseController, books, Filter, FilterOperator) {
+  function (
+    BaseController,
+    books,
+    Filter,
+    FilterOperator,
+    JSONModel,
+    MessageToast,
+    MessageBox
+  ) {
     "use strict";
 
     return BaseController.extend("project1.controller.App", {
@@ -14,24 +25,26 @@ sap.ui.define(
         this.setModel(oBooksModel, "booksModel");
       },
 
-      onAddRecord: function () {
+      onSubmitForm: function () {
+        const oMode = this.oFormDialog.getModel("mode").getProperty("/mode");
         const oModel = this.getModel("booksModel");
         const aBooks = oModel.getProperty("/books");
-        const iMaxIdNum = aBooks.reduce((iMax, oBook) => {
-          const iNum = parseInt(oBook.ID.slice(1), 10);
-          return Math.max(iMax, iNum);
-        }, 0);
-        const sNextId = "b" + String(iMaxIdNum + 1).padStart(3, "0");
-        aBooks.push({
-          ID: sNextId,
-          Name: "",
-          Author: "",
-          Genre: "",
-          ReleaseDate: "",
-          AvailableQuantity: 0,
-          editable: false,
-        });
+        const oBookData = this.oFormDialog.getModel("book").getData();
+        const sError = this._validateBookData(oBookData);
+        if (sError) {
+          MessageToast.show(sError);
+          return;
+        }
+        if (oMode === "edit") {
+          const iIndex = aBooks.findIndex((b) => b.ID === oBookData.ID);
+          if (iIndex !== -1) {
+            aBooks[iIndex] = { ...oBookData };
+          }
+        } else {
+          aBooks.push({ ID: Date.now(), ...oBookData });
+        }
         oModel.refresh();
+        this.oFormDialog.close();
       },
 
       onDeleteRecord: function () {
@@ -48,19 +61,19 @@ sap.ui.define(
       },
 
       onOpenSortDialog: async function () {
-        this.oDialog ??= await this.loadFragment({
+        this.oSortDialog ??= await this.loadFragment({
           name: "project1.view.SortDialog",
         });
 
-        this.oDialog.open();
+        this.oSortDialog.open();
       },
 
-      onCloseDialog: function () {
-        this.byId("SortDialog").close();
+      onCancelSortDialog: function () {
+        this.oSortDialog.close();
       },
 
       onCloseDialogWithSort: function () {
-        if (!this.byId("SortDialog")) return;
+        if (!this.oSortDialog) return;
         const oFieldCombo = this.byId("sortField");
         const oOrderCombo = this.byId("sortOrder");
         const sField = oFieldCombo.getSelectedKey();
@@ -71,7 +84,7 @@ sap.ui.define(
           .getBinding("items")
           .sort(new sap.ui.model.Sorter(sField, sOrder !== "asc"));
         oModel.refresh();
-        this.byId("SortDialog").close();
+        this.oSortDialog.close();
       },
 
       onFilterBooks: function () {
@@ -89,13 +102,77 @@ sap.ui.define(
         oBinding.filter(aFilters);
       },
 
-      onEditToggle: function (oEvent) {
+      onEditPress: function (oEvent) {
         const oButton = oEvent.getSource();
         const oContext = oButton.getBindingContext("booksModel");
-        const oModel = oContext.getModel();
-        const sPath = oContext.getPath();
-        const bEditable = oModel.getProperty(sPath + "/editable");
-        oModel.setProperty(sPath + "/editable", !bEditable);
+        const oBookData = oContext.getObject();
+        this.onOpenFormDialog(oBookData, true);
+      },
+
+      onOpenConfirmDialog: async function () {
+        const oResourceBundle = this.getOwnerComponent()
+          .getModel("i18n")
+          .getResourceBundle();
+        MessageBox.warning(oResourceBundle.getText("confirmQuestion"), {
+          actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+          emphasizedAction: MessageBox.Action.OK,
+          onClose: (sAction) => {
+            if (sAction === MessageBox.Action.OK) {
+              this.onDeleteRecord();
+            }
+          },
+          dependentOn: this.getView(),
+        });
+      },
+
+      onOpenFormDialog: async function (oBookData, bEditmode = false) {
+        this.oFormDialog ??= await this.loadFragment({
+          name: "project1.view.FormDialog",
+        });
+        if (!this.oFormModel) {
+          this.oFormModel = new JSONModel();
+          this.oFormDialog.setModel(this.oFormModel, "book");
+        }
+        if (!this.oModeModel) {
+          this.oModeModel = new JSONModel();
+          this.oFormDialog.setModel(this.oModeModel, "mode");
+        }
+        this.oFormModel.setData(
+          bEditmode
+            ? oBookData
+            : {
+                Name: "",
+                Author: "",
+                Genre: "",
+                ReleaseDate: "",
+                AvailableQuantity: "",
+              }
+        );
+        this.oModeModel.setData({ mode: bEditmode ? "edit" : "create" });
+        this.oFormDialog.open();
+      },
+
+      onCloseFormDialog: function () {
+        this.oFormDialog.close();
+      },
+
+      _validateBookData: function (oBookData) {
+        if (!oBookData.Name) return "Name is required";
+        if (!oBookData.Author) return "Author is required";
+        if (!oBookData.Genre) return "Genre is required";
+        if (
+          !oBookData.ReleaseDate ||
+          isNaN(Date.parse(oBookData.ReleaseDate))
+        ) {
+          return "Release Date must be a valid date";
+        }
+        if (
+          oBookData.AvailableQuantity === "" ||
+          isNaN(oBookData.AvailableQuantity)
+        ) {
+          return "Available Quantity must be a number";
+        }
+        return null;
       },
     });
   }

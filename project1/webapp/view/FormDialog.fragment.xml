@@ -1,0 +1,55 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:l="sap.ui.layout">
+   <Dialog
+      id="CreateFormDialog"
+      title ="{= ${mode>/mode} === 'edit' ? ${i18n>editBook} : ${i18n>createBook} }">
+      <content>
+        <l:VerticalLayout class="sapUiContentPadding" width="100%">
+            <Label text="{i18n>name}" labelFor="Name" />
+            <Input
+                id="Name"
+                placeholder="{i18n>enterName}"
+                value="{book>/Name}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="{i18n>author}" labelFor="Author" />
+            <Input
+                id="Author"
+                placeholder="{i18n>enterAuthor}"
+                value="{book>/Author}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="{i18n>genre}" labelFor="Genre" />
+            <Input
+                id="Genre"
+                placeholder="{i18n>enterGenre}"
+                value="{book>/Genre}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="{i18n>releaseDate}" labelFor="ReleaseDate" />
+            <Input
+                id="ReleaseDate"
+                type="Date"
+                placeholder="Enter Release Date"
+                value="{book>/ReleaseDate}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="{i18n>availableQuantity}" labelFor="AvailableQuantity" />
+            <Input
+                id="AvailableQuantity"
+                type="Number"
+                placeholder="{i18n>enterAvailableQuantity}"
+                value="{book>/AvailableQuantity}"
+                class="sapUiSmallMarginBottom" />
+        </l:VerticalLayout>
+      </content>
+      <beginButton>
+         <Button
+            text="{i18n>cancel}"
+            press=".onCloseFormDialog"/>
+      </beginButton>
+      <endButton>
+         <Button
+            text="{= ${mode>/mode} === 'edit' ? ${i18n>save} : ${i18n>add} }"
+            press=".onSubmitForm"/>
+      </endButton>
+   </Dialog>
+</core:FragmentDefinition>

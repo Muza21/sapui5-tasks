@@ -12,7 +12,6 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
             Genre: "Self-improvement",
             ReleaseDate: "2020-04-07",
             AvailableQuantity: 5,
-            editable: false,
           },
           {
             ID: "b002",
@@ -21,7 +20,6 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
             Genre: "Productivity",
             ReleaseDate: "2018-10-16",
             AvailableQuantity: 8,
-            editable: false,
           },
           {
             ID: "b003",
@@ -30,7 +28,6 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
             Genre: "Self-improvement",
             ReleaseDate: "2016-01-05",
             AvailableQuantity: 4,
-            editable: false,
           },
           {
             ID: "b004",
@@ -39,7 +36,6 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
             Genre: "Technology",
             ReleaseDate: "1999-10-30",
             AvailableQuantity: 3,
-            editable: false,
           },
           {
             ID: "b005",
@@ -48,7 +44,6 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
             Genre: "Psychology",
             ReleaseDate: "2011-10-25",
             AvailableQuantity: 6,
-            editable: false,
           },
           {
             ID: "b006",
@@ -57,7 +52,6 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
             Genre: "Technology",
             ReleaseDate: "2008-08-01",
             AvailableQuantity: 7,
-            editable: false,
           },
           {
             ID: "b007",
@@ -66,7 +60,6 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
             Genre: "Biography",
             ReleaseDate: "2018-12-04",
             AvailableQuantity: 2,
-            editable: false,
           },
           {
             ID: "b008",
@@ -75,7 +68,6 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
             Genre: "History",
             ReleaseDate: "2015-02-10",
             AvailableQuantity: 10,
-            editable: false,
           },
           {
             ID: "b009",
@@ -84,7 +76,6 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
             Genre: "Fiction",
             ReleaseDate: "1988-04-15",
             AvailableQuantity: 9,
-            editable: false,
           },
           {
             ID: "b010",
@@ -93,7 +84,6 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
             Genre: "Memoir",
             ReleaseDate: "2018-02-18",
             AvailableQuantity: 5,
-            editable: false,
           },
         ],
         genres: [
