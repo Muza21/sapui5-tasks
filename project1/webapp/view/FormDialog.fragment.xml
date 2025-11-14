@@ -4,40 +4,40 @@
    xmlns:l="sap.ui.layout">
    <Dialog
       id="CreateFormDialog"
-      title ="{= ${mode>/mode} === 'edit' ? ${i18n>editBook} : ${i18n>createBook} }">
+      title ="{= ${booksModel>/mode} === 'edit' ? ${i18n>editBook} : ${i18n>createBook} }">
       <content>
         <l:VerticalLayout class="sapUiContentPadding" width="100%">
             <Label text="{i18n>name}" labelFor="Name" />
             <Input
                 id="Name"
                 placeholder="{i18n>enterName}"
-                value="{book>/Name}"
+                value="{booksModel>/dialogBook/Name}"
                 class="sapUiSmallMarginBottom" />
             <Label text="{i18n>author}" labelFor="Author" />
             <Input
                 id="Author"
                 placeholder="{i18n>enterAuthor}"
-                value="{book>/Author}"
+                value="{booksModel>/dialogBook/Author}"
                 class="sapUiSmallMarginBottom" />
             <Label text="{i18n>genre}" labelFor="Genre" />
             <Input
                 id="Genre"
                 placeholder="{i18n>enterGenre}"
-                value="{book>/Genre}"
+                value="{booksModel>/dialogBook/Genre}"
                 class="sapUiSmallMarginBottom" />
             <Label text="{i18n>releaseDate}" labelFor="ReleaseDate" />
             <Input
                 id="ReleaseDate"
                 type="Date"
                 placeholder="Enter Release Date"
-                value="{book>/ReleaseDate}"
+                value="{booksModel>/dialogBook/ReleaseDate}"
                 class="sapUiSmallMarginBottom" />
             <Label text="{i18n>availableQuantity}" labelFor="AvailableQuantity" />
             <Input
                 id="AvailableQuantity"
                 type="Number"
                 placeholder="{i18n>enterAvailableQuantity}"
-                value="{book>/AvailableQuantity}"
+                value="{booksModel>/dialogBook/AvailableQuantity}"
                 class="sapUiSmallMarginBottom" />
         </l:VerticalLayout>
       </content>
@@ -48,7 +48,7 @@
       </beginButton>
       <endButton>
          <Button
-            text="{= ${mode>/mode} === 'edit' ? ${i18n>save} : ${i18n>add} }"
+            text="{= ${booksModel>/mode} === 'edit' ? ${i18n>save} : ${i18n>add} }"
             press=".onSubmitForm"/>
       </endButton>
    </Dialog>

@@ -26,10 +26,10 @@ sap.ui.define(
       },
 
       onSubmitForm: function () {
-        const oMode = this.oFormDialog.getModel("mode").getProperty("/mode");
+        const oMode = this.getModel("booksModel").getProperty("/mode");
         const oModel = this.getModel("booksModel");
         const aBooks = oModel.getProperty("/books");
-        const oBookData = this.oFormDialog.getModel("book").getData();
+        const oBookData = oModel.getProperty("/dialogBook");
         const sError = this._validateBookData(oBookData);
         if (sError) {
           MessageToast.show(sError);
@@ -105,7 +105,7 @@ sap.ui.define(
       onEditPress: function (oEvent) {
         const oButton = oEvent.getSource();
         const oContext = oButton.getBindingContext("booksModel");
-        const oBookData = oContext.getObject();
+        const oBookData = { ...oContext.getObject() };
         this.onOpenFormDialog(oBookData, true);
       },
 
@@ -129,26 +129,18 @@ sap.ui.define(
         this.oFormDialog ??= await this.loadFragment({
           name: "project1.view.FormDialog",
         });
-        if (!this.oFormModel) {
-          this.oFormModel = new JSONModel();
-          this.oFormDialog.setModel(this.oFormModel, "book");
-        }
-        if (!this.oModeModel) {
-          this.oModeModel = new JSONModel();
-          this.oFormDialog.setModel(this.oModeModel, "mode");
-        }
-        this.oFormModel.setData(
-          bEditmode
-            ? oBookData
-            : {
-                Name: "",
-                Author: "",
-                Genre: "",
-                ReleaseDate: "",
-                AvailableQuantity: "",
-              }
-        );
-        this.oModeModel.setData({ mode: bEditmode ? "edit" : "create" });
+        const oBooksModel = this.getModel("booksModel");
+        const oBookDataNew = bEditmode
+          ? oBookData
+          : {
+              Name: "",
+              Author: "",
+              Genre: "",
+              ReleaseDate: "",
+              AvailableQuantity: "",
+            };
+        oBooksModel.setProperty("/mode", bEditmode ? "edit" : "create");
+        oBooksModel.setProperty("/dialogBook", oBookDataNew);
         this.oFormDialog.open();
       },
 
