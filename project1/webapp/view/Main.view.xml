@@ -7,7 +7,7 @@
         <content>
             <IconTabBar id="idIconTabBar" headerMode="Inline" class="sapUiResponsiveContentPadding">
             <items>
-            <IconTabFilter text="JSON Model" key="jsonModel">
+            <IconTabFilter text="{i18n>jsonModel}" key="jsonModel">
             <Toolbar>
                <Input id="titleFilter" placeholder="{i18n>searchBookByTitle}"/>
                <Select id="genreFilter" items="{path: 'booksModel>/genres'}">
@@ -64,20 +64,20 @@
                </items>
             </Table>
             </IconTabFilter>
-            <IconTabFilter text="OData V2 Model" key="odataV2">
+            <IconTabFilter text="{i18n>odataV2Model}" key="odataV2">
                <Table id="productsTableV2" items="{odataV2Model>/Products}">
                   <headerToolbar>
                         <Toolbar>
-                           <Title text="Products OData V2" level="H2"/>
+                           <Title text="{i18n>productsODataV2}" level="H2"/>
                         </Toolbar>
                   </headerToolbar>
                   <columns>
-                        <Column><Label text="ID"/></Column>
-                        <Column><Label text="Name"/></Column>
-                        <Column><Label text="Description"/></Column>
-                        <Column><Label text="Release Date"/></Column>
-                        <Column><Label text="Rating"/></Column>
-                        <Column><Label text="Price"/></Column>
+                        <Column><Label text="{i18n>id}"/></Column>
+                        <Column><Label text="{i18n>name}"/></Column>
+                        <Column><Label text="{i18n>description}"/></Column>
+                        <Column><Label text="{i18n>releaseDate}"/></Column>
+                        <Column><Label text="{i18n>rating}"/></Column>
+                        <Column><Label text="{i18n>price}"/></Column>
                   </columns>
                   <items>
                         <ColumnListItem>
@@ -94,20 +94,20 @@
                </Table>
             </IconTabFilter>
 
-            <IconTabFilter text="OData V4 Model" key="odataV4">
+            <IconTabFilter text="{i18n>odataV4Model}" key="odataV4">
                <Table id="productsTableV4" items="{odataV4Model>/Products}">
                   <headerToolbar>
                      <Toolbar>
-                           <Title text="Products OData V4" level="H2"/>
+                           <Title text="{i18n>productsODataV4}" level="H2"/>
                      </Toolbar>
                   </headerToolbar>
                   <columns>
-                     <Column><Label text="ID"/></Column>
-                     <Column><Label text="Name"/></Column>
-                     <Column><Label text="Description"/></Column>
-                     <Column><Label text="Release Date"/></Column>
-                     <Column><Label text="Rating"/></Column>
-                     <Column><Label text="Price"/></Column>
+                     <Column><Label text="{i18n>id}"/></Column>
+                     <Column><Label text="{i18n>name}"/></Column>
+                     <Column><Label text="{i18n>description}"/></Column>
+                     <Column><Label text="{i18n>releaseDate}"/></Column>
+                     <Column><Label text="{i18n>rating}"/></Column>
+                     <Column><Label text="{i18n>price}"/></Column>
                   </columns>
                   <items>
                      <ColumnListItem>
