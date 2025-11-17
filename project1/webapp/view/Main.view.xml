@@ -93,6 +93,36 @@
                   </items>
                </Table>
             </IconTabFilter>
+
+            <IconTabFilter text="OData V4 Model" key="odataV4">
+               <Table id="productsTableV4" items="{odataV4Model>/Products}">
+                  <headerToolbar>
+                     <Toolbar>
+                           <Title text="Products OData V4" level="H2"/>
+                     </Toolbar>
+                  </headerToolbar>
+                  <columns>
+                     <Column><Label text="ID"/></Column>
+                     <Column><Label text="Name"/></Column>
+                     <Column><Label text="Description"/></Column>
+                     <Column><Label text="Release Date"/></Column>
+                     <Column><Label text="Rating"/></Column>
+                     <Column><Label text="Price"/></Column>
+                  </columns>
+                  <items>
+                     <ColumnListItem>
+                           <cells>
+                              <Text text="{odataV4Model>ID}"/>
+                              <Text text="{odataV4Model>Name}"/>
+                              <Text text="{odataV4Model>Description}"/>
+                              <Text text="{odataV4Model>ReleaseDate}"/>
+                              <Text text="{odataV4Model>Rating}"/>
+                              <Text text="{odataV4Model>Price}"/>
+                           </cells>
+                     </ColumnListItem>
+                  </items>
+               </Table>
+            </IconTabFilter>
             </items>
             </IconTabBar>
         </content>
