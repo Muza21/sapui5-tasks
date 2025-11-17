@@ -29,7 +29,7 @@
             <Input
                 id="ReleaseDate"
                 type="Date"
-                placeholder="Enter Release Date"
+                placeholder="{i18n>enterReleaseDate}"
                 value="{booksModel>/dialogBook/ReleaseDate}"
                 class="sapUiSmallMarginBottom" />
             <Label text="{i18n>availableQuantity}" labelFor="AvailableQuantity" />

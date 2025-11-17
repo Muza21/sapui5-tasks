@@ -149,20 +149,29 @@ sap.ui.define(
       },
 
       _validateBookData: function (oBookData) {
-        if (!oBookData.Name) return "Name is required";
-        if (!oBookData.Author) return "Author is required";
-        if (!oBookData.Genre) return "Genre is required";
+        const oResourceBundle = this.getOwnerComponent()
+          .getModel("i18n")
+          .getResourceBundle();
+        if (!oBookData.Name) {
+          return oResourceBundle.getText("required", ["Name"]);
+        }
+        if (!oBookData.Author) {
+          return oResourceBundle.getText("required", ["Author"]);
+        }
+        if (!oBookData.Genre) {
+          return oResourceBundle.getText("required", ["Genre"]);
+        }
         if (
           !oBookData.ReleaseDate ||
           isNaN(Date.parse(oBookData.ReleaseDate))
         ) {
-          return "Release Date must be a valid date";
+          return oResourceBundle.getText("invalidDate");
         }
         if (
           oBookData.AvailableQuantity === "" ||
           isNaN(oBookData.AvailableQuantity)
         ) {
-          return "Available Quantity must be a number";
+          return oResourceBundle.getText("invalidQuantity");
         }
         return null;
       },
