@@ -5,6 +5,9 @@
     xmlns="sap.m">
     <Page id="page" title="{i18n>pageTitle}">
         <content>
+            <IconTabBar id="idIconTabBar" headerMode="Inline" class="sapUiResponsiveContentPadding">
+            <items>
+            <IconTabFilter text="{i18n>jsonModel}" key="jsonModel">
             <Toolbar>
                <Input id="titleFilter" placeholder="{i18n>searchBookByTitle}"/>
                <Select id="genreFilter" items="{path: 'booksModel>/genres'}">
@@ -60,6 +63,68 @@
                   </ColumnListItem>
                </items>
             </Table>
+            </IconTabFilter>
+            <IconTabFilter text="{i18n>odataV2Model}" key="odataV2">
+               <Table id="productsTableV2" items="{odataV2Model>/Products}">
+                  <headerToolbar>
+                        <Toolbar>
+                           <Title text="{i18n>productsODataV2}" level="H2"/>
+                        </Toolbar>
+                  </headerToolbar>
+                  <columns>
+                        <Column><Label text="{i18n>id}"/></Column>
+                        <Column><Label text="{i18n>name}"/></Column>
+                        <Column><Label text="{i18n>description}"/></Column>
+                        <Column><Label text="{i18n>releaseDate}"/></Column>
+                        <Column><Label text="{i18n>rating}"/></Column>
+                        <Column><Label text="{i18n>price}"/></Column>
+                  </columns>
+                  <items>
+                        <ColumnListItem>
+                           <cells>
+                              <Text text="{odataV2Model>ID}"/>
+                              <Text text="{odataV2Model>Name}"/>
+                              <Text text="{odataV2Model>Description}"/>
+                              <Text text="{path: 'odataV2Model>ReleaseDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'yyyy-MM-dd'}}"/>
+                              <Text text="{odataV2Model>Rating}"/>
+                              <Text text="{odataV2Model>Price}"/>
+                           </cells>
+                        </ColumnListItem>
+                  </items>
+               </Table>
+            </IconTabFilter>
+
+            <IconTabFilter text="{i18n>odataV4Model}" key="odataV4">
+               <Table id="productsTableV4" items="{odataV4Model>/Products}">
+                  <headerToolbar>
+                     <Toolbar>
+                           <Title text="{i18n>productsODataV4}" level="H2"/>
+                     </Toolbar>
+                  </headerToolbar>
+                  <columns>
+                     <Column><Label text="{i18n>id}"/></Column>
+                     <Column><Label text="{i18n>name}"/></Column>
+                     <Column><Label text="{i18n>description}"/></Column>
+                     <Column><Label text="{i18n>releaseDate}"/></Column>
+                     <Column><Label text="{i18n>rating}"/></Column>
+                     <Column><Label text="{i18n>price}"/></Column>
+                  </columns>
+                  <items>
+                     <ColumnListItem>
+                           <cells>
+                              <Text text="{odataV4Model>ID}"/>
+                              <Text text="{odataV4Model>Name}"/>
+                              <Text text="{odataV4Model>Description}"/>
+                              <Text text="{odataV4Model>ReleaseDate}"/>
+                              <Text text="{odataV4Model>Rating}"/>
+                              <Text text="{odataV4Model>Price}"/>
+                           </cells>
+                     </ColumnListItem>
+                  </items>
+               </Table>
+            </IconTabFilter>
+            </items>
+            </IconTabBar>
         </content>
     </Page>
 </mvc:View>

@@ -1,0 +1,65 @@
+[
+  {
+    "ID": 1,
+    "Name": "Bread",
+    "Description": "Whole grain bread",
+    "ReleaseDate": "/Date(1325376000000)/",
+    "DiscontinuedDate": null,
+    "Rating": 4,
+    "Price": "2.5"
+  },
+  {
+    "ID": 2,
+    "Name": "Milk",
+    "Description": "Low fat milk",
+    "ReleaseDate": "/Date(1325376000000)/",
+    "DiscontinuedDate": null,
+    "Rating": 3,
+    "Price": "3.5"
+  },
+  {
+    "ID": 3,
+    "Name": "Vint Soda",
+    "Description": "Americana Variety - Mix of 6 flavors",
+    "ReleaseDate": "/Date(1325376000000)/",
+    "DiscontinuedDate": null,
+    "Rating": 3,
+    "Price": "20.9"
+  },
+  {
+    "ID": 4,
+    "Name": "Cranberry Juice",
+    "Description": "16oz Glass Bottle",
+    "ReleaseDate": "/Date(1325376000000)/",
+    "DiscontinuedDate": null,
+    "Rating": 3,
+    "Price": "22.8"
+  },
+  {
+    "ID": 5,
+    "Name": "Pink Lemonade",
+    "Description": "36oz Bottle",
+    "ReleaseDate": "/Date(1325376000000)/",
+    "DiscontinuedDate": null,
+    "Rating": 3,
+    "Price": "18.8"
+  },
+  {
+    "ID": 6,
+    "Name": "DVD Player",
+    "Description": "1080P Upconversion DVD Player",
+    "ReleaseDate": "/Date(1325376000000)/",
+    "DiscontinuedDate": null,
+    "Rating": 3,
+    "Price": "35.88"
+  },
+  {
+    "ID": 7,
+    "Name": "LCD HDTV",
+    "Description": "42 inch 1080p LCD with Built-in Blu-ray Disc Player",
+    "ReleaseDate": "/Date(1325376000000)/",
+    "DiscontinuedDate": null,
+    "Rating": 3,
+    "Price": "1088.8"
+  }
+]
