@@ -65,10 +65,25 @@
             </Table>
             </IconTabFilter>
             <IconTabFilter text="{i18n>odataV2Model}" key="odataV2">
-               <Table id="productsTableV2" items="{odataV2Model>/Products}">
+               <Table id="productsTableV2" items="{odataV2Model>/Products}" mode="MultiSelect">
                   <headerToolbar>
                         <Toolbar>
                            <Title text="{i18n>productsODataV2}" level="H2"/>
+                           <ToolbarSpacer/>
+                           <Input id="automaticSearchBar"
+                                 placeholder="{i18n>searchBookByTitle}"
+                                 width="400px"
+                                 liveChange=".onSearchProductsV2"/>
+                           <Button 
+                              text="{i18n>addRecord}" 
+                              icon="sap-icon://add" 
+                              type="Emphasized"
+                              press=".onAddProductsV2"/>
+                           <Button 
+                              text="{i18n>deleteRecord}" 
+                              icon="sap-icon://delete" 
+                              type="Reject"
+                              press=".onDeleteMultiSelectedItems"/>
                         </Toolbar>
                   </headerToolbar>
                   <columns>
@@ -78,6 +93,7 @@
                         <Column><Label text="{i18n>releaseDate}"/></Column>
                         <Column><Label text="{i18n>rating}"/></Column>
                         <Column><Label text="{i18n>price}"/></Column>
+                        <Column><Label text="{i18n>actions}"/></Column>
                   </columns>
                   <items>
                         <ColumnListItem>
@@ -88,6 +104,10 @@
                               <Text text="{path: 'odataV2Model>ReleaseDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'yyyy-MM-dd'}}"/>
                               <Text text="{odataV2Model>Rating}"/>
                               <Text text="{odataV2Model>Price}"/>
+                              <Button 
+                                 text="{i18n>edit}"
+                                 icon="sap-icon://edit"
+                                 press=".onEditProductsV2"/>
                            </cells>
                         </ColumnListItem>
                   </items>

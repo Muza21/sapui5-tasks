@@ -4,7 +4,6 @@ sap.ui.define(
     "project1/model/books",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
   ],
@@ -13,7 +12,6 @@ sap.ui.define(
     books,
     Filter,
     FilterOperator,
-    JSONModel,
     MessageToast,
     MessageBox
   ) {
@@ -23,6 +21,8 @@ sap.ui.define(
       onInit: function () {
         const oBooksModel = books.createBooksModel();
         this.setModel(oBooksModel, "booksModel");
+        const oODataV2Model = this.getOwnerComponent().getModel("odataV2Model");
+        this.setModel(oODataV2Model, "odataV2Model");
       },
 
       onSubmitForm: function () {
@@ -146,6 +146,35 @@ sap.ui.define(
 
       onCloseFormDialog: function () {
         this.oFormDialog.close();
+      },
+
+      onDeleteMultiSelectedItems: function () {
+        const oTable = this.byId("productsTableV2");
+        const odataV2Model = this.getModel("odataV2Model");
+        const aSelected = oTable.getSelectedItems();
+        aSelected.forEach((item) => {
+          const path = item.getBindingContext("odataV2Model").getPath();
+          odataV2Model.remove(path, { groupId: "deleteBatch" });
+        });
+        odataV2Model.submitChanges({
+          groupId: "deleteBatch",
+          success: () => MessageToast.show("Deleted"),
+          error: () => MessageToast.show("Error deleting"),
+        });
+      },
+
+      onSearchProductsV2: function (oEvent) {
+        const sQuery = oEvent.getParameter("newValue");
+        const oTable = this.byId("productsTableV2");
+        const oBinding = oTable.getBinding("items");
+        const aFilters = [];
+        if (sQuery && sQuery.length > 0) {
+          aFilters.push(
+            new Filter("Description", FilterOperator.Contains, sQuery)
+          );
+        }
+
+        oBinding.filter(aFilters);
       },
 
       _validateBookData: function (oBookData) {
