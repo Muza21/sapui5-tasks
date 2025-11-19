@@ -101,7 +101,14 @@
                               <Text text="{odataV2Model>ID}"/>
                               <Text text="{odataV2Model>Name}"/>
                               <Text text="{odataV2Model>Description}"/>
-                              <Text text="{path: 'odataV2Model>ReleaseDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'yyyy-MM-dd'}}"/>
+                              <Text text="{
+                                       path: 'odataV2Model>ReleaseDate',
+                                       type: 'sap.ui.model.odata.type.DateTime',
+                                       formatOptions: {
+                                          pattern: 'yyyy-MM-dd',
+                                          style: 'medium'
+                                       }
+                                    }"/>
                               <Text text="{odataV2Model>Rating}"/>
                               <Text text="{odataV2Model>Price}"/>
                               <Button 

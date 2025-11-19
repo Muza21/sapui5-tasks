@@ -174,8 +174,8 @@ sap.ui.define(
                 Name: "",
                 Description: "",
                 ReleaseDate: null,
-                Rating: 0,
-                Price: 0,
+                Rating: null,
+                Price: null,
               },
             });
 
@@ -186,9 +186,19 @@ sap.ui.define(
 
       onSubmitV2Form: function () {
         const oModel = this.getModel("odataV2Model");
+        const oContext = this.oFormV2Dialog.getBindingContext("odataV2Model");
+        const oData = oContext.getObject();
+        const sError = this._validateProductV2Data(oData);
+        if (sError) {
+          MessageToast.show(sError);
+          return;
+        }
         oModel.submitChanges({
-          success: () => {},
-          error: (err) => console.error(err),
+          success: () => {
+            const sMessage = this._bEditMode ? "Updated" : "Created";
+            MessageToast.show(sMessage);
+          },
+          error: (err) => MessageToast.show("Error"),
         });
         this.oFormV2Dialog.close();
       },
@@ -259,6 +269,27 @@ sap.ui.define(
           isNaN(oBookData.AvailableQuantity)
         ) {
           return oResourceBundle.getText("invalidQuantity");
+        }
+        return null;
+      },
+
+      _validateProductV2Data: function (oData) {
+        if (!oData.Name || oData.Name.trim() === "") {
+          return "Name is required and cannot be empty";
+        }
+        if (!oData.Description || oData.Description.trim() === "") {
+          return "Description is required and cannot be empty";
+        }
+        if (!oData.ReleaseDate || isNaN(Date.parse(oData.ReleaseDate))) {
+          return "Valid Release Date is required";
+        }
+        const iRating = parseInt(oData.Rating, 10);
+        if (isNaN(iRating) || oData.Rating === "" || oData.Rating === null) {
+          return "Rating must be a valid number";
+        }
+        const fPrice = parseFloat(oData.Price);
+        if (isNaN(fPrice) || oData.Price === "" || oData.Price === null) {
+          return "Price must be a valid number";
         }
         return null;
       },
