@@ -218,10 +218,6 @@ sap.ui.define(
           const path = item.getBindingContext("odataV2Model").getPath();
           odataV2Model.remove(path);
         });
-        odataV2Model.submitChanges({
-          success: () => MessageToast.show("Deleted"),
-          error: () => MessageToast.show("Error deleting"),
-        });
       },
 
       onSearchProductsV2: function (oEvent) {
