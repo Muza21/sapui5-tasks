@@ -146,20 +146,38 @@ sap.ui.define(
         this.oFormDialog.close();
       },
 
-      onOpenFormV2Dialog: async function (bEditMode = false) {
+      onEditProductsV2: function (oEvent) {
+        const oButton = oEvent.getSource();
+        const oContext = oButton.getBindingContext("odataV2Model");
+        const oOriginal = oContext.getObject();
+        const oProductV2Data = {
+          ...oOriginal,
+          ReleaseDate: oOriginal.ReleaseDate
+            ? new Date(oOriginal.ReleaseDate)
+            : null,
+        };
+        this.onOpenFormV2Dialog(oProductV2Data, true);
+      },
+
+      onOpenFormV2Dialog: async function (oProductV2Data, bEditMode = false) {
         this.oFormV2Dialog ??= await this.loadFragment({
           name: "project1.view.FormV2Dialog",
         });
         const oModel = this.getModel("odataV2Model");
-        const oContextNew = oModel.createEntry("/Products", {
-          properties: {
-            Name: "",
-            Description: "",
-            ReleaseDate: null,
-            Rating: 0,
-            Price: 0,
-          },
-        });
+
+        if (bEditMode) {
+        }
+        const oContextNew = bEditMode
+          ? oModel.getContext(`/Products(${oProductV2Data.ID})`)
+          : oModel.createEntry("/Products", {
+              properties: {
+                Name: "",
+                Description: "",
+                ReleaseDate: null,
+                Rating: 0,
+                Price: 0,
+              },
+            });
 
         this.oFormV2Dialog.setBindingContext(oContextNew, "odataV2Model");
         this._bEditMode = bEditMode;
