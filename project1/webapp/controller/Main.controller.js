@@ -149,13 +149,7 @@ sap.ui.define(
       onEditProductsV2: function (oEvent) {
         const oButton = oEvent.getSource();
         const oContext = oButton.getBindingContext("odataV2Model");
-        const oOriginal = oContext.getObject();
-        const oProductV2Data = {
-          ...oOriginal,
-          ReleaseDate: oOriginal.ReleaseDate
-            ? new Date(oOriginal.ReleaseDate)
-            : null,
-        };
+        const oProductV2Data = oContext.getObject();
         this.onOpenFormV2Dialog(oProductV2Data, true);
       },
 
@@ -222,10 +216,9 @@ sap.ui.define(
         const aSelected = oTable.getSelectedItems();
         aSelected.forEach((item) => {
           const path = item.getBindingContext("odataV2Model").getPath();
-          odataV2Model.remove(path, { groupId: "deleteBatch" });
+          odataV2Model.remove(path);
         });
         odataV2Model.submitChanges({
-          groupId: "deleteBatch",
           success: () => MessageToast.show("Deleted"),
           error: () => MessageToast.show("Error deleting"),
         });
