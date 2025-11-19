@@ -78,7 +78,7 @@
                               text="{i18n>addRecord}" 
                               icon="sap-icon://add" 
                               type="Emphasized"
-                              press=".onAddProductsV2"/>
+                              press=".onOpenFormV2Dialog"/>
                            <Button 
                               text="{i18n>deleteRecord}" 
                               icon="sap-icon://delete" 

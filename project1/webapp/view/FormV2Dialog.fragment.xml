@@ -1,0 +1,60 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:l="sap.ui.layout">
+   <Dialog
+      id="CreateFormDialogV2"
+      title ="{= ${odataV2Model>/mode} === 'edit' ? ${i18n>editProduct} : ${i18n>addProduct} }">
+      <content>
+        <l:VerticalLayout class="sapUiContentPadding" width="100%">
+            <Label text="{i18n>name}" labelFor="NameV2" />
+            <Input
+                id="NameV2"
+                placeholder="{i18n>enterName}"
+                value="{odataV2Model>Name}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="{i18n>description}" labelFor="DescriptionV2" />
+            <Input
+                id="DescriptionV2"
+                placeholder="{i18n>enterDescription}"
+                value="{odataV2Model>Description}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="{i18n>releaseDate}" labelFor="ReleaseDateV2" />
+            <DatePicker
+               id="ReleaseDateV2"
+               value="{ 
+                  path: 'odataV2Model>ReleaseDate',
+                  type: 'sap.ui.model.type.Date',
+                  formatOptions: { pattern: 'yyyy-MM-dd' } 
+               }"
+               displayFormat="yyyy-MM-dd"
+               valueFormat="yyyy-MM-dd"
+            />
+            <Label text="{i18n>rating}" labelFor="RatingV2" />
+            <Input
+                id="RatingV2"
+                type="Number"
+                placeholder="{i18n>enterRating}"
+                value="{odataV2Model>Rating}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="{i18n>price}" labelFor="PriceV2" />
+            <Input
+                id="PriceV2"
+                type="Number"
+                placeholder="{i18n>enterPrice}"
+                value="{odataV2Model>Price}"
+                class="sapUiSmallMarginBottom" />
+        </l:VerticalLayout>
+      </content>
+      <beginButton>
+         <Button
+            text="{i18n>cancel}"
+            press=".onCloseFormV2Dialog"/>
+      </beginButton>
+      <endButton>
+         <Button
+            text="{= ${odataV2Model>/mode} === 'edit' ? ${i18n>save} : ${i18n>add} }"
+            press=".onSubmitV2Form"/>
+      </endButton>
+   </Dialog>
+</core:FragmentDefinition>

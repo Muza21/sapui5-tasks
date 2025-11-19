@@ -21,8 +21,6 @@ sap.ui.define(
       onInit: function () {
         const oBooksModel = books.createBooksModel();
         this.setModel(oBooksModel, "booksModel");
-        const oODataV2Model = this.getOwnerComponent().getModel("odataV2Model");
-        this.setModel(oODataV2Model, "odataV2Model");
       },
 
       onSubmitForm: function () {
@@ -146,6 +144,48 @@ sap.ui.define(
 
       onCloseFormDialog: function () {
         this.oFormDialog.close();
+      },
+
+      onOpenFormV2Dialog: async function (bEditMode = false) {
+        this.oFormV2Dialog ??= await this.loadFragment({
+          name: "project1.view.FormV2Dialog",
+        });
+        const oModel = this.getModel("odataV2Model");
+        const oContextNew = oModel.createEntry("/Products", {
+          properties: {
+            Name: "",
+            Description: "",
+            ReleaseDate: null,
+            Rating: 0,
+            Price: 0,
+          },
+        });
+
+        this.oFormV2Dialog.setBindingContext(oContextNew, "odataV2Model");
+        this._bEditMode = bEditMode;
+        this.oFormV2Dialog.open();
+      },
+
+      onSubmitV2Form: function () {
+        const oModel = this.getModel("odataV2Model");
+        oModel.submitChanges({
+          success: () => {},
+          error: (err) => console.error(err),
+        });
+        this.oFormV2Dialog.close();
+      },
+
+      onCloseFormV2Dialog: function () {
+        const oModel = this.getModel("odataV2Model");
+
+        if (!this._bEditMode) {
+          const oContext = this.oFormV2Dialog.getBindingContext("odataV2Model");
+          if (oContext) oModel.deleteCreatedEntry(oContext);
+        } else {
+          oModel.resetChanges();
+        }
+
+        this.oFormV2Dialog.close();
       },
 
       onDeleteMultiSelectedItems: function () {
