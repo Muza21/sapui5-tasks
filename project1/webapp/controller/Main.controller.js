@@ -216,7 +216,10 @@ sap.ui.define(
         const aSelected = oTable.getSelectedItems();
         aSelected.forEach((item) => {
           const path = item.getBindingContext("odataV2Model").getPath();
-          odataV2Model.remove(path);
+          odataV2Model.remove(path, {
+            success: () => MessageToast.show("Deleted"),
+            error: () => MessageToast.show("Error deleting"),
+          });
         });
       },
 
