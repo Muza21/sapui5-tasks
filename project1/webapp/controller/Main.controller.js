@@ -4,7 +4,6 @@ sap.ui.define(
     "project1/model/books",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
   ],
@@ -13,7 +12,6 @@ sap.ui.define(
     books,
     Filter,
     FilterOperator,
-    JSONModel,
     MessageToast,
     MessageBox
   ) {
@@ -148,6 +146,97 @@ sap.ui.define(
         this.oFormDialog.close();
       },
 
+      onEditProductsV2: function (oEvent) {
+        const oButton = oEvent.getSource();
+        const oContext = oButton.getBindingContext("odataV2Model");
+        const oProductV2Data = oContext.getObject();
+        this.onOpenFormV2Dialog(oProductV2Data, true);
+      },
+
+      onOpenFormV2Dialog: async function (oProductV2Data, bEditMode = false) {
+        this.oFormV2Dialog ??= await this.loadFragment({
+          name: "project1.view.FormV2Dialog",
+        });
+        const oModel = this.getModel("odataV2Model");
+
+        if (bEditMode) {
+        }
+        const oContextNew = bEditMode
+          ? oModel.getContext(`/Products(${oProductV2Data.ID})`)
+          : oModel.createEntry("/Products", {
+              properties: {
+                Name: "",
+                Description: "",
+                ReleaseDate: null,
+                Rating: null,
+                Price: null,
+              },
+            });
+
+        this.oFormV2Dialog.setBindingContext(oContextNew, "odataV2Model");
+        this._bEditMode = bEditMode;
+        this.oFormV2Dialog.open();
+      },
+
+      onSubmitV2Form: function () {
+        const oModel = this.getModel("odataV2Model");
+        const oContext = this.oFormV2Dialog.getBindingContext("odataV2Model");
+        const oData = oContext.getObject();
+        const sError = this._validateProductV2Data(oData);
+        if (sError) {
+          MessageToast.show(sError);
+          return;
+        }
+        oModel.submitChanges({
+          success: () => {
+            const sMessage = this._bEditMode ? "Updated" : "Created";
+            MessageToast.show(sMessage);
+          },
+          error: (err) => MessageToast.show("Error"),
+        });
+        this.oFormV2Dialog.close();
+      },
+
+      onCloseFormV2Dialog: function () {
+        const oModel = this.getModel("odataV2Model");
+
+        if (!this._bEditMode) {
+          const oContext = this.oFormV2Dialog.getBindingContext("odataV2Model");
+          if (oContext) oModel.deleteCreatedEntry(oContext);
+        } else {
+          oModel.resetChanges();
+        }
+
+        this.oFormV2Dialog.close();
+      },
+
+      onDeleteMultiSelectedItems: function () {
+        const oTable = this.byId("productsTableV2");
+        const odataV2Model = this.getModel("odataV2Model");
+        const aSelected = oTable.getSelectedItems();
+        aSelected.forEach((item) => {
+          const path = item.getBindingContext("odataV2Model").getPath();
+          odataV2Model.remove(path, {
+            success: () => MessageToast.show("Deleted"),
+            error: () => MessageToast.show("Error deleting"),
+          });
+        });
+      },
+
+      onSearchProductsV2: function (oEvent) {
+        const sQuery = oEvent.getParameter("newValue");
+        const oTable = this.byId("productsTableV2");
+        const oBinding = oTable.getBinding("items");
+        const aFilters = [];
+        if (sQuery && sQuery.length > 0) {
+          aFilters.push(
+            new Filter("Description", FilterOperator.Contains, sQuery)
+          );
+        }
+
+        oBinding.filter(aFilters);
+      },
+
       _validateBookData: function (oBookData) {
         const oResourceBundle = this.getOwnerComponent()
           .getModel("i18n")
@@ -172,6 +261,27 @@ sap.ui.define(
           isNaN(oBookData.AvailableQuantity)
         ) {
           return oResourceBundle.getText("invalidQuantity");
+        }
+        return null;
+      },
+
+      _validateProductV2Data: function (oData) {
+        if (!oData.Name || oData.Name.trim() === "") {
+          return "Name is required and cannot be empty";
+        }
+        if (!oData.Description || oData.Description.trim() === "") {
+          return "Description is required and cannot be empty";
+        }
+        if (!oData.ReleaseDate || isNaN(Date.parse(oData.ReleaseDate))) {
+          return "Valid Release Date is required";
+        }
+        const iRating = parseInt(oData.Rating, 10);
+        if (isNaN(iRating) || oData.Rating === "" || oData.Rating === null) {
+          return "Rating must be a valid number";
+        }
+        const fPrice = parseFloat(oData.Price);
+        if (isNaN(fPrice) || oData.Price === "" || oData.Price === null) {
+          return "Price must be a valid number";
         }
         return null;
       },

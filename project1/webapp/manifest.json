@@ -72,7 +72,10 @@
       },
       "odataV2Model": {
         "type": "sap.ui.model.odata.v2.ODataModel",
-        "dataSource": "odataV2"
+        "dataSource": "odataV2",
+        "settings": {
+          "defaultBindingMode": "TwoWay"
+        }
       },
       "odataV4Model": {
         "type": "sap.ui.model.odata.v4.ODataModel",
