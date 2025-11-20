@@ -122,10 +122,25 @@
             </IconTabFilter>
 
             <IconTabFilter text="{i18n>odataV4Model}" key="odataV4">
-               <Table id="productsTableV4" items="{odataV4Model>/Products}">
+               <Table id="productsTableV4" items="{odataV4Model>/Products}" mode="MultiSelect">
                   <headerToolbar>
                      <Toolbar>
-                           <Title text="{i18n>productsODataV4}" level="H2"/>
+                        <Title text="{i18n>productsODataV4}" level="H2"/>
+                        <ToolbarSpacer/>
+                        <Input id="automaticSearchBarV4"
+                              placeholder="{i18n>searchBookByTitle}"
+                              width="400px"
+                              liveChange=".onSearchProductsV4"/>
+                        <Button 
+                           text="{i18n>addRecord}" 
+                           icon="sap-icon://add" 
+                           type="Emphasized"
+                           press=".onOpenFormV4Dialog"/>
+                        <Button 
+                           text="{i18n>deleteRecord}" 
+                           icon="sap-icon://delete" 
+                           type="Reject"
+                           press=".onDeleteMultiSelectedItemsV4"/>
                      </Toolbar>
                   </headerToolbar>
                   <columns>
@@ -135,6 +150,7 @@
                      <Column><Label text="{i18n>releaseDate}"/></Column>
                      <Column><Label text="{i18n>rating}"/></Column>
                      <Column><Label text="{i18n>price}"/></Column>
+                     <Column><Label text="{i18n>actions}"/></Column>
                   </columns>
                   <items>
                      <ColumnListItem>
@@ -142,9 +158,17 @@
                               <Text text="{odataV4Model>ID}"/>
                               <Text text="{odataV4Model>Name}"/>
                               <Text text="{odataV4Model>Description}"/>
-                              <Text text="{odataV4Model>ReleaseDate}"/>
+                              <Text text="{
+                                 path: 'odataV4Model>ReleaseDate',
+                                 type: 'sap.ui.model.odata.type.DateTimeOffset',
+                                 formatOptions: { pattern: 'yyyy-MM-dd' }
+                              }"/>
                               <Text text="{odataV4Model>Rating}"/>
                               <Text text="{odataV4Model>Price}"/>
+                              <Button 
+                                 text="{i18n>edit}"
+                                 icon="sap-icon://edit"
+                                 press=".onEditProductsV4"/>
                            </cells>
                      </ColumnListItem>
                   </items>
