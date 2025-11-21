@@ -81,8 +81,7 @@
         "type": "sap.ui.model.odata.v4.ODataModel",
         "dataSource": "odataV4",
         "settings": {
-          "operationMode": "Server",
-          "updateGroupId": "productChanges"
+          "operationMode": "Server"
         }
       }
     },

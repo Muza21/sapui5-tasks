@@ -246,18 +246,25 @@ sap.ui.define(
         this.oFormV4Dialog ??= await this.loadFragment({
           name: "project1.view.FormV4Dialog",
         });
+
         const oModel = this.getModel("odataV4Model");
         const oContextNew = bEditMode
           ? oModel
-              .bindContext(`/Products(${oProductV4Data.ID})`)
+              .bindContext(`/Products(${oProductV4Data.ID})`, null, {
+                $$updateGroupId: "productChanges",
+              })
               .getBoundContext()
-          : oModel.bindList("/Products").create({
-              Name: "",
-              Description: "",
-              ReleaseDate: null,
-              Rating: null,
-              Price: null,
-            });
+          : oModel
+              .bindList("/Products", {
+                $$updateGroupId: "productChanges",
+              })
+              .create({
+                Name: "",
+                Description: "",
+                ReleaseDate: null,
+                Rating: null,
+                Price: null,
+              });
 
         this.oFormV4Dialog.setBindingContext(oContextNew, "odataV4Model");
         this._bEditMode = bEditMode;
@@ -290,7 +297,6 @@ sap.ui.define(
 
       onCloseFormV4Dialog: function () {
         const oModel = this.getModel("odataV4Model");
-
         if (!this._bEditMode) {
           const oContext = this.oFormV4Dialog.getBindingContext("odataV4Model");
           if (oContext) oContext.delete();
@@ -316,8 +322,6 @@ sap.ui.define(
           .submitBatch("productChanges")
           .then(async () => {
             MessageToast.show(`Deleted Successfully`);
-            oTable.removeSelections();
-            await oTable.getBinding("items").requestRefresh();
           })
           .catch((oError) => {
             MessageToast.show("Error deleting products");
