@@ -254,17 +254,13 @@ sap.ui.define(
                 $$updateGroupId: "productChanges",
               })
               .getBoundContext()
-          : oModel
-              .bindList("/Products", {
-                $$updateGroupId: "productChanges",
-              })
-              .create({
-                Name: "",
-                Description: "",
-                ReleaseDate: null,
-                Rating: null,
-                Price: null,
-              });
+          : oModel.bindList("/Products").create({
+              Name: "",
+              Description: "",
+              ReleaseDate: null,
+              Rating: null,
+              Price: null,
+            });
 
         this.oFormV4Dialog.setBindingContext(oContextNew, "odataV4Model");
         this._bEditMode = bEditMode;
@@ -297,11 +293,14 @@ sap.ui.define(
 
       onCloseFormV4Dialog: function () {
         const oModel = this.getModel("odataV4Model");
+        const oContext = this.oFormV4Dialog.getBindingContext("odataV4Model");
         if (!this._bEditMode) {
-          const oContext = this.oFormV4Dialog.getBindingContext("odataV4Model");
           if (oContext) oContext.delete();
         } else {
-          oModel.resetChanges();
+          const oBinding = oContext.getBinding();
+          if (oBinding) {
+            oBinding.resetChanges();
+          }
         }
         this.oFormV4Dialog.close();
       },
