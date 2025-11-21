@@ -313,19 +313,13 @@ sap.ui.define(
           MessageToast.show("select at least one item");
           return;
         }
-        aSelected.map((oItem) => {
+        const deletePromises = aSelected.map((oItem) => {
           const oContext = oItem.getBindingContext("odataV4Model");
-          oContext.delete("productChanges");
+          return oContext.delete();
         });
-        oModel
-          .submitBatch("productChanges")
-          .then(async () => {
-            MessageToast.show(`Deleted Successfully`);
-          })
-          .catch((oError) => {
-            MessageToast.show("Error deleting products");
-            console.error(oError);
-          });
+        Promise.all(deletePromises)
+          .then(() => MessageToast.show("Deleted"))
+          .catch(() => MessageToast.show("Error deleting"));
       },
 
       onSearchProductsV4: function (oEvent) {
