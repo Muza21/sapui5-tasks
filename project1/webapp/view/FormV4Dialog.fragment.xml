@@ -1,0 +1,56 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:l="sap.ui.layout">
+   <Dialog
+      id="CreateFormDialogV4">
+      <content>
+        <l:VerticalLayout class="sapUiContentPadding" width="100%">
+            <Label text="{i18n>name}" labelFor="NameV4" />
+            <Input
+                id="NameV4"
+                placeholder="{i18n>enterName}"
+                value="{odataV4Model>Name}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="{i18n>description}" labelFor="DescriptionV4" />
+            <Input
+                id="DescriptionV4"
+                placeholder="{i18n>enterDescription}"
+                value="{odataV4Model>Description}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="{i18n>releaseDate}" labelFor="ReleaseDateV4" />
+            <DatePicker
+               id="ReleaseDateV4"
+               value="{odataV4Model>ReleaseDate}"
+               displayFormat="yyyy-MM-dd"
+               valueFormat="yyyy-MM-dd"
+            />
+
+            <Label text="{i18n>rating}" labelFor="RatingV4" />
+            <Input
+                id="RatingV4"
+                type="Number"
+                placeholder="{i18n>enterRating}"
+                value="{odataV4Model>Rating}"
+                class="sapUiSmallMarginBottom" />
+            <Label text="{i18n>price}" labelFor="PriceV4" />
+            <Input
+                id="PriceV4"
+                type="Number"
+                placeholder="{i18n>enterPrice}"
+                value="{odataV4Model>Price}"
+                class="sapUiSmallMarginBottom" />
+        </l:VerticalLayout>
+      </content>
+      <beginButton>
+         <Button
+            text="{i18n>cancel}"
+            press=".onCloseFormV4Dialog"/>
+      </beginButton>
+      <endButton>
+         <Button
+            text="{i18n>save}"
+            press=".onSubmitV4Form"/>
+      </endButton>
+   </Dialog>
+</core:FragmentDefinition>

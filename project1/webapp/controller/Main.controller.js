@@ -159,8 +159,6 @@ sap.ui.define(
         });
         const oModel = this.getModel("odataV2Model");
 
-        if (bEditMode) {
-        }
         const oContextNew = bEditMode
           ? oModel.getContext(`/Products(${oProductV2Data.ID})`)
           : oModel.createEntry("/Products", {
@@ -237,6 +235,107 @@ sap.ui.define(
         oBinding.filter(aFilters);
       },
 
+      onEditProductsV4: function (oEvent) {
+        const oButton = oEvent.getSource();
+        const oContext = oButton.getBindingContext("odataV4Model");
+        const oProductV4Data = oContext.getObject();
+        this.onOpenFormV4Dialog(oProductV4Data, true);
+      },
+
+      onOpenFormV4Dialog: async function (oProductV4Data, bEditMode = false) {
+        this.oFormV4Dialog ??= await this.loadFragment({
+          name: "project1.view.FormV4Dialog",
+        });
+
+        const oModel = this.getModel("odataV4Model");
+        const oContextNew = bEditMode
+          ? oModel
+              .bindContext(`/Products(${oProductV4Data.ID})`, null, {
+                $$updateGroupId: "productChanges",
+              })
+              .getBoundContext()
+          : oModel.bindList("/Products").create({
+              Name: "",
+              Description: "",
+              ReleaseDate: null,
+              Rating: null,
+              Price: null,
+            });
+
+        this.oFormV4Dialog.setBindingContext(oContextNew, "odataV4Model");
+        this._bEditMode = bEditMode;
+        this.oFormV4Dialog.open();
+      },
+
+      onSubmitV4Form: function () {
+        const oModel = this.getModel("odataV4Model");
+        const oContext = this.oFormV4Dialog.getBindingContext("odataV4Model");
+        const oData = oContext.getObject();
+        const sError = this._validateProductV4Data(oData);
+        if (sError) {
+          MessageToast.show(sError);
+          return;
+        }
+        oModel
+          .submitBatch("productChanges")
+          .then(async () => {
+            const sMessage = this._bEditMode ? "updated" : "created";
+            MessageToast.show(sMessage);
+            const oTable = this.byId("productsTableV4");
+            await oTable.getBinding("items").requestRefresh();
+            this.oFormV4Dialog.close();
+          })
+          .catch((oError) => {
+            MessageToast.show("Error updating product");
+            console.error(oError);
+          });
+      },
+
+      onCloseFormV4Dialog: function () {
+        const oModel = this.getModel("odataV4Model");
+        const oContext = this.oFormV4Dialog.getBindingContext("odataV4Model");
+        if (!this._bEditMode) {
+          if (oContext) oContext.delete();
+        } else {
+          const oBinding = oContext.getBinding();
+          if (oBinding) {
+            oBinding.resetChanges();
+          }
+        }
+        this.oFormV4Dialog.close();
+      },
+
+      onDeleteMultiSelectedItemsV4: function () {
+        const oTable = this.byId("productsTableV4");
+        const oModel = this.getModel("odataV4Model");
+        const aSelected = oTable.getSelectedItems();
+        if (aSelected.length === 0) {
+          MessageToast.show("select at least one item");
+          return;
+        }
+        const deletePromises = aSelected.map((oItem) => {
+          const oContext = oItem.getBindingContext("odataV4Model");
+          return oContext.delete();
+        });
+        Promise.all(deletePromises)
+          .then(() => MessageToast.show("Deleted"))
+          .catch(() => MessageToast.show("Error deleting"));
+      },
+
+      onSearchProductsV4: function (oEvent) {
+        const sQuery = oEvent.getParameter("newValue");
+        const oTable = this.byId("productsTableV4");
+        const oBinding = oTable.getBinding("items");
+        const aFilters = [];
+        if (sQuery && sQuery.length > 0) {
+          aFilters.push(
+            new Filter("Description", FilterOperator.Contains, sQuery)
+          );
+        }
+
+        oBinding.filter(aFilters);
+      },
+
       _validateBookData: function (oBookData) {
         const oResourceBundle = this.getOwnerComponent()
           .getModel("i18n")
@@ -282,6 +381,41 @@ sap.ui.define(
         const fPrice = parseFloat(oData.Price);
         if (isNaN(fPrice) || oData.Price === "" || oData.Price === null) {
           return "Price must be a valid number";
+        }
+        return null;
+      },
+
+      _validateProductV4Data: function (oData) {
+        if (!oData.Name || oData.Name.trim() === "") {
+          return "Name is required";
+        }
+        if (!oData.Description || oData.Description.trim() === "") {
+          return "Description is required";
+        }
+        if (!oData.ReleaseDate) {
+          return "Release Date is required";
+        }
+        if (
+          oData.Rating === null ||
+          oData.Rating === undefined ||
+          oData.Rating === ""
+        ) {
+          return "Rating is required";
+        }
+        if (
+          oData.Price === null ||
+          oData.Price === undefined ||
+          oData.Price === ""
+        ) {
+          return "Price is required";
+        }
+        const nRating = parseFloat(oData.Rating);
+        if (isNaN(nRating) || nRating < 0 || nRating > 5) {
+          return "Rating must be a number between 0 and 5";
+        }
+        const nPrice = parseFloat(oData.Price);
+        if (isNaN(nPrice) || nPrice < 0) {
+          return "Price must be a positive number";
         }
         return null;
       },

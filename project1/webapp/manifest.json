@@ -79,7 +79,10 @@
       },
       "odataV4Model": {
         "type": "sap.ui.model.odata.v4.ODataModel",
-        "dataSource": "odataV4"
+        "dataSource": "odataV4",
+        "settings": {
+          "operationMode": "Server"
+        }
       }
     },
     "resources": {
