@@ -21,6 +21,51 @@ sap.ui.define(
       onInit: function () {
         const oBooksModel = books.createBooksModel();
         this.setModel(oBooksModel, "booksModel");
+
+        const oRouter = this.getOwnerComponent().getRouter();
+
+        this._routeToTabMap = {
+          RouteMain: "jsonModel",
+          RouteV2: "odataV2",
+        };
+
+        Object.keys(this._routeToTabMap).forEach((routeName) => {
+          oRouter
+            .getRoute(routeName)
+            .attachPatternMatched(this._onRouteMatched, this);
+        });
+
+        const oIconTabBar = this.byId("idIconTabBar");
+        oIconTabBar.attachSelect(this.onTabSelect, this);
+      },
+
+      _onRouteMatched: function (oEvent) {
+        const sRouteName = oEvent.getParameter("name");
+        const oIconTabBar = this.byId("idIconTabBar");
+
+        const sKey = this._routeToTabMap[sRouteName];
+        if (sKey) {
+          oIconTabBar.setSelectedKey(sKey);
+        }
+      },
+
+      onTabSelect: function (oEvent) {
+        const sKey = oEvent.getParameter("key");
+        const oRouter = this.getOwnerComponent().getRouter();
+
+        const sRouteName = Object.keys(this._routeToTabMap).find(
+          (key) => this._routeToTabMap[key] === sKey
+        );
+        if (sRouteName) {
+          oRouter.navTo(sRouteName);
+        }
+      },
+      onProductPress: function (oEvent) {
+        const oContext = oEvent.getSource().getBindingContext("odataV2Model");
+        const sProductID = oContext.getProperty("ID");
+        this.getOwnerComponent().getRouter().navTo("ProductDetail", {
+          ProductID: sProductID,
+        });
       },
 
       onSubmitForm: function () {

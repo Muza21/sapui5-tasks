@@ -96,7 +96,7 @@
                         <Column><Label text="{i18n>actions}"/></Column>
                   </columns>
                   <items>
-                        <ColumnListItem>
+                        <ColumnListItem type="Navigation" press=".onProductPress">
                            <cells>
                               <Text text="{odataV2Model>ID}"/>
                               <Text text="{odataV2Model>Name}"/>
