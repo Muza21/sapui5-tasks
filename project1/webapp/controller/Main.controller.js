@@ -24,41 +24,26 @@ sap.ui.define(
 
         const oRouter = this.getOwnerComponent().getRouter();
 
-        this._routeToTabMap = {
-          RouteMain: "jsonModel",
-          RouteV2: "odataV2",
-        };
-
-        Object.keys(this._routeToTabMap).forEach((routeName) => {
-          oRouter
-            .getRoute(routeName)
-            .attachPatternMatched(this._onRouteMatched, this);
-        });
+        oRouter
+          .getRoute("tabRoute")
+          .attachPatternMatched(this._onRouteMatched, this);
 
         const oIconTabBar = this.byId("idIconTabBar");
         oIconTabBar.attachSelect(this.onTabSelect, this);
       },
 
       _onRouteMatched: function (oEvent) {
-        const sRouteName = oEvent.getParameter("name");
+        const sRouteName = oEvent.getParameter("arguments").tabKey;
         const oIconTabBar = this.byId("idIconTabBar");
-
-        const sKey = this._routeToTabMap[sRouteName];
-        if (sKey) {
-          oIconTabBar.setSelectedKey(sKey);
-        }
+        oIconTabBar.setSelectedKey(sRouteName);
       },
 
       onTabSelect: function (oEvent) {
         const sKey = oEvent.getParameter("key");
         const oRouter = this.getOwnerComponent().getRouter();
-
-        const sRouteName = Object.keys(this._routeToTabMap).find(
-          (key) => this._routeToTabMap[key] === sKey
-        );
-        if (sRouteName) {
-          oRouter.navTo(sRouteName);
-        }
+        oRouter.navTo("tabRoute", {
+          tabKey: sKey,
+        });
       },
       onProductPress: function (oEvent) {
         const oContext = oEvent.getSource().getBindingContext("odataV2Model");

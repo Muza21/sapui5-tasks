@@ -110,12 +110,12 @@
       "routes": [
         {
           "name": "RouteMain",
-          "pattern": "",
+          "pattern": ":?query:",
           "target": ["TargetMain"]
         },
         {
-          "name": "RouteV2",
-          "pattern": "odataV2",
+          "name": "tabRoute",
+          "pattern": "tab/{tabKey}",
           "target": ["TargetMain"]
         },
         {
