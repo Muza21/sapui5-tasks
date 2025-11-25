@@ -6,7 +6,33 @@
     "ReleaseDate": "/Date(1325376000000)/",
     "DiscontinuedDate": null,
     "Rating": 4,
-    "Price": "2.5"
+    "Price": "2.5",
+    "Supplier": [
+      {
+        "ID": 1,
+        "Name": "Best Breads Co.",
+        "Address": {
+          "Street": "123 Baker St",
+          "City": "New York",
+          "State": "NY",
+          "ZipCode": "10001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      },
+      {
+        "ID": 2,
+        "Name": "Dairy Milk Ltd.",
+        "Address": {
+          "Street": "45 Milk Ave",
+          "City": "Los Angeles",
+          "State": "CA",
+          "ZipCode": "90001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      }
+    ]
   },
   {
     "ID": 2,
@@ -15,7 +41,33 @@
     "ReleaseDate": "/Date(1325376000000)/",
     "DiscontinuedDate": null,
     "Rating": 3,
-    "Price": "3.5"
+    "Price": "3.5",
+    "Supplier": [
+      {
+        "ID": 1,
+        "Name": "Best Breads Co.",
+        "Address": {
+          "Street": "123 Baker St",
+          "City": "New York",
+          "State": "NY",
+          "ZipCode": "10001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      },
+      {
+        "ID": 2,
+        "Name": "Dairy Milk Ltd.",
+        "Address": {
+          "Street": "45 Milk Ave",
+          "City": "Los Angeles",
+          "State": "CA",
+          "ZipCode": "90001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      }
+    ]
   },
   {
     "ID": 3,
@@ -24,7 +76,33 @@
     "ReleaseDate": "/Date(1325376000000)/",
     "DiscontinuedDate": null,
     "Rating": 3,
-    "Price": "20.9"
+    "Price": "20.9",
+    "Supplier": [
+      {
+        "ID": 1,
+        "Name": "Best Breads Co.",
+        "Address": {
+          "Street": "123 Baker St",
+          "City": "New York",
+          "State": "NY",
+          "ZipCode": "10001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      },
+      {
+        "ID": 2,
+        "Name": "Dairy Milk Ltd.",
+        "Address": {
+          "Street": "45 Milk Ave",
+          "City": "Los Angeles",
+          "State": "CA",
+          "ZipCode": "90001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      }
+    ]
   },
   {
     "ID": 4,
@@ -33,7 +111,33 @@
     "ReleaseDate": "/Date(1325376000000)/",
     "DiscontinuedDate": null,
     "Rating": 3,
-    "Price": "22.8"
+    "Price": "22.8",
+    "Supplier": [
+      {
+        "ID": 1,
+        "Name": "Best Breads Co.",
+        "Address": {
+          "Street": "123 Baker St",
+          "City": "New York",
+          "State": "NY",
+          "ZipCode": "10001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      },
+      {
+        "ID": 2,
+        "Name": "Dairy Milk Ltd.",
+        "Address": {
+          "Street": "45 Milk Ave",
+          "City": "Los Angeles",
+          "State": "CA",
+          "ZipCode": "90001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      }
+    ]
   },
   {
     "ID": 5,
@@ -42,7 +146,33 @@
     "ReleaseDate": "/Date(1325376000000)/",
     "DiscontinuedDate": null,
     "Rating": 3,
-    "Price": "18.8"
+    "Price": "18.8",
+    "Supplier": [
+      {
+        "ID": 1,
+        "Name": "Best Breads Co.",
+        "Address": {
+          "Street": "123 Baker St",
+          "City": "New York",
+          "State": "NY",
+          "ZipCode": "10001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      },
+      {
+        "ID": 2,
+        "Name": "Dairy Milk Ltd.",
+        "Address": {
+          "Street": "45 Milk Ave",
+          "City": "Los Angeles",
+          "State": "CA",
+          "ZipCode": "90001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      }
+    ]
   },
   {
     "ID": 6,
@@ -51,7 +181,33 @@
     "ReleaseDate": "/Date(1325376000000)/",
     "DiscontinuedDate": null,
     "Rating": 3,
-    "Price": "35.88"
+    "Price": "35.88",
+    "Supplier": [
+      {
+        "ID": 1,
+        "Name": "Best Breads Co.",
+        "Address": {
+          "Street": "123 Baker St",
+          "City": "New York",
+          "State": "NY",
+          "ZipCode": "10001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      },
+      {
+        "ID": 2,
+        "Name": "Dairy Milk Ltd.",
+        "Address": {
+          "Street": "45 Milk Ave",
+          "City": "Los Angeles",
+          "State": "CA",
+          "ZipCode": "90001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      }
+    ]
   },
   {
     "ID": 7,
@@ -60,6 +216,32 @@
     "ReleaseDate": "/Date(1325376000000)/",
     "DiscontinuedDate": null,
     "Rating": 3,
-    "Price": "1088.8"
+    "Price": "1088.8",
+    "Supplier": [
+      {
+        "ID": 1,
+        "Name": "Best Breads Co.",
+        "Address": {
+          "Street": "123 Baker St",
+          "City": "New York",
+          "State": "NY",
+          "ZipCode": "10001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      },
+      {
+        "ID": 2,
+        "Name": "Dairy Milk Ltd.",
+        "Address": {
+          "Street": "45 Milk Ave",
+          "City": "Los Angeles",
+          "State": "CA",
+          "ZipCode": "90001",
+          "Country": "USA"
+        },
+        "Concurrency": 1
+      }
+    ]
   }
 ]

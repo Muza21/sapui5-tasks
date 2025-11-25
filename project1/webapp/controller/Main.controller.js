@@ -21,6 +21,36 @@ sap.ui.define(
       onInit: function () {
         const oBooksModel = books.createBooksModel();
         this.setModel(oBooksModel, "booksModel");
+
+        const oRouter = this.getOwnerComponent().getRouter();
+
+        oRouter
+          .getRoute("tabRoute")
+          .attachPatternMatched(this._onRouteMatched, this);
+
+        const oIconTabBar = this.byId("idIconTabBar");
+        oIconTabBar.attachSelect(this.onTabSelect, this);
+      },
+
+      _onRouteMatched: function (oEvent) {
+        const sRouteName = oEvent.getParameter("arguments").tabKey;
+        const oIconTabBar = this.byId("idIconTabBar");
+        oIconTabBar.setSelectedKey(sRouteName);
+      },
+
+      onTabSelect: function (oEvent) {
+        const sKey = oEvent.getParameter("key");
+        const oRouter = this.getOwnerComponent().getRouter();
+        oRouter.navTo("tabRoute", {
+          tabKey: sKey,
+        });
+      },
+      onProductPress: function (oEvent) {
+        const oContext = oEvent.getSource().getBindingContext("odataV2Model");
+        const sProductID = oContext.getProperty("ID");
+        this.getOwnerComponent().getRouter().navTo("ProductDetail", {
+          ProductID: sProductID,
+        });
       },
 
       onSubmitForm: function () {

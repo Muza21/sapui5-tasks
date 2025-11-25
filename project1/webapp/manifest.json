@@ -74,7 +74,10 @@
         "type": "sap.ui.model.odata.v2.ODataModel",
         "dataSource": "odataV2",
         "settings": {
-          "defaultBindingMode": "TwoWay"
+          "defaultBindingMode": "TwoWay",
+          "useBatch": true,
+          "defaultCountMode": "Inline",
+          "json": true
         }
       },
       "odataV4Model": {
@@ -109,12 +112,26 @@
           "name": "RouteMain",
           "pattern": ":?query:",
           "target": ["TargetMain"]
+        },
+        {
+          "name": "tabRoute",
+          "pattern": "tab/{tabKey}",
+          "target": ["TargetMain"]
+        },
+        {
+          "name": "ProductDetail",
+          "pattern": "ProductDetail/{ProductID}",
+          "target": "TargetProductDetail"
         }
       ],
       "targets": {
         "TargetMain": {
           "id": "Main",
           "name": "Main"
+        },
+        "TargetProductDetail": {
+          "id": "ProductDetail",
+          "name": "ProductDetail"
         }
       }
     },
